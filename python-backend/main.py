@@ -2,8 +2,22 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# Run with uvicorn main:app --reload
-app = FastAPI()
+# OpenAPI/Docs metadata
+tags_metadata = [
+    {"name": "questions", "description": "Browse and retrieve interview questions."},
+    {"name": "companies", "description": "List companies and filter questions by company."},
+    {"name": "feedback", "description": "Submit interview attempts and get AI-generated feedback."},
+]
+
+# Run with: uvicorn main:app --reload
+app = FastAPI(
+    title="Mockly.ai Backend",
+    version="0.1.0",
+    description="FastAPI backend for interview questions and AI feedback.",
+    openapi_tags=tags_metadata,
+    docs_url="/docs",
+    redoc_url="/redoc",
+)
 
 # Configure CORS to allow the React frontend to communicate with this backend
 origins = [
