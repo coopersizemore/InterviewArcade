@@ -24,7 +24,6 @@
 }
 
 /* --- Styles for the new FeedbackColumn component --- */
-
 .feedback-column {
   flex: 1; /* Makes each column take up half the space in the left pane */
   background-color: #f9f9f9;
@@ -72,4 +71,92 @@
   margin-top: 10px;
   border-radius: 4px;
   line-height: 1.6;
+}
+
+/** Styles for audio components */
+.recording, .transcript {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.transcript p {
+  line-height: 1.7;
+  white-space: pre-wrap; /* Respects newlines in the transcript text */
+  color: #333;
+}
+
+/* --- Styles for the new AudioPlayer component --- */
+.audio-player {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: #f9f9f9;
+  padding: 10px 15px;
+  border-radius: 50px; /* Pill shape */
+  border: 1px solid #ddd;
+}
+
+.audio-player.loading {
+  justify-content: center;
+  color: #555;
+  font-weight: bold;
+}
+
+.play-pause-btn {
+  background: #007bff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.play-pause-btn:hover {
+  background: #0056b3;
+}
+
+.time-display {
+  font-family: monospace;
+  font-size: 0.9em;
+  color: #333;
+  min-width: 40px;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: #ddd;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #007bff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* --- Loading Spinner Animation --- */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  color: #007bff;
 }

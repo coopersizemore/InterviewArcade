@@ -1,6 +1,8 @@
 import './FeedbackPage.css'
 import { useLocation } from 'react-router-dom';
-import FeedbackColumn from './FeedbackColumn'; 
+import { useState, useEffect } from 'react';
+import FeedbackColumn from './FeedbackColumn';
+import AudioPlayer from './AudioPlayer';
 
 function FeedbackPage() {
     const location = useLocation();
@@ -46,7 +48,27 @@ function FeedbackPage() {
     //     console.log("Hello World!")
     // }
 
-    // Handle the case where someone navigates here directly
+    // State to manage the audio loading process
+    const [isAudioLoading, setIsAudioLoading] = useState(true);
+    const [audioUrl, setAudioUrl] = useState(null);
+
+    useEffect(() => {
+        // Simulate fetching the audio file after the component mounts
+        const fetchAudio = () => {
+            console.log("Fetching AI voiceover...");
+            setTimeout(() => {
+                // Once the "request" is done, set the URL and stop loading
+                // Replace with a real audio file URL when you have one
+                const temporaryAudioFile = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+                setAudioUrl(temporaryAudioFile);
+                setIsAudioLoading(false);
+                console.log("Audio loaded!");
+            }, 3000); // Simulate a 3-second delay
+        };
+
+        fetchAudio();
+    }, []); // Empty array ensures this runs only once
+
     if (!feedbackData) {
         return <div>No feedback data available. Please complete an interview first.</div>;
     }
@@ -59,14 +81,13 @@ function FeedbackPage() {
                 <FeedbackColumn title="Audio Review" reviewData={feedbackData.audio_review} />
             </div>
             <div className="right-pane">
-                {/* Transcript will go here later */}
                 <div className="recording">
-
+                    <h3>AI Voiceover</h3>
+                    <AudioPlayer src={audioUrl} isLoading={isAudioLoading} />
                 </div>
                 <div className="transcript">
-                    <p>
-                        {feedbackData.transcript}
-                    </p>
+                    <h3>Transcript</h3>
+                    <p>{feedbackData.transcript}</p>
                 </div>
             </div>
         </div>
