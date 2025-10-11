@@ -1,15 +1,13 @@
 from fastapi import APIRouter
-from models import FeedbackRequest, FeedbackResponse
-import services
-from questions import get_question_by_id
+from services.questions_service import load_questions_from_file
 
-router = APIRouter()
+router = APIRouter(prefix="/api/companies", tags=["companies"])
 
-@router.get("/companies", response_model=list[str])
+@router.get("/", response_model=list[str])
 async def get_companies():
     """Endpoint to get a list of all companies"""
     companies = set()
-    for q in QUESTIONS_DB:
+    for q in load_questions_from_file():
         for company in q["companies"]:
             companies.add(company)
     return list(companies)

@@ -1,11 +1,11 @@
 from fastapi import APIRouter
 from models import FeedbackRequest, FeedbackResponse
 import services
-from questions import get_question_by_id
+from routes.questions import get_question_by_id
 
-router = APIRouter()
+router = APIRouter(prefix="/api/feedback", tags=["feedback"])
 
-@router.post("/api/feedback", response_model=FeedbackResponse)
+@router.post("/", response_model=FeedbackResponse, summary="Submit interview attempt for feedback")
 async def get_interview_feedback(request: FeedbackRequest):
     """
     Main endpoint to process the user's interview attempt.
