@@ -67,3 +67,11 @@ class TTSResponse(BaseModel):
     Returns the text-to-speech audio file produced by an external TTS provider
     """
     audio_filepath: str  # The audio transcript of the LLM evaluation
+
+
+class AudioBlob(BaseModel):
+    """
+    Stores an audio blob from the user's microphone
+    """
+    filename: str
+    data: str  # base64-encoded audio chunk from frontend
