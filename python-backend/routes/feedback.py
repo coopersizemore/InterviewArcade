@@ -4,7 +4,7 @@ from pathlib import Path
 
 from services import gemini_service
 
-router = APIRouter("/api/feedback")
+router = APIRouter(prefix="/api/feedback")
 
 
 @router.post("/", response_model=FeedbackResponse)
