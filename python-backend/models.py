@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
+
 
 class InterviewQuestion(BaseModel):
     """
@@ -9,7 +10,7 @@ class InterviewQuestion(BaseModel):
     id: int
     title: str
     difficulty: str
-    category: str
+    categories: List[str]
     description: str
     examples: List[Dict[str, str]]
     constraints: List[str]
@@ -27,35 +28,42 @@ class Company(BaseModel):
     description: Optional[str] = ""
 
 
+class Review(BaseModel):
+    """A structured review for either code or audio."""
+    score: Optional[int] = 0  # Integer score out of 10
+    strengths_list = Optional[List[str]] = []  # Concise list of strengths
+    strengths_description = Optional[str] = ""  # Description of strengths
+    improvements_list = Optional[List[str]] = []  # Concise list of improvements
+    improvement_description = Optional[str] = ""  # Description of improvements
+
+
 class FeedbackResponse(BaseModel):
     """
-    Stores information about a feedback response from the LLM
-    This is incomplete, edit for specific use case
+    Structured feedback response containing separate reviews for code and audio.
     """
-    scoring: str
-    feedback: str
-    transcript: str
+    code_review: Review  # the review of the interviwee's code
+    audio_review: Review  # the review of the interviewee's audio walkthrough
+    overall_assessment: str  # an overall assessment of the interviewee's performance, as a transcript
 
 
 class FeedbackRequest(BaseModel):
     """
     Stores information about the feedback request
-    This doesn't include 
     """
-    code: str
-    question: str
-    audio_filepath: str
+    code: str  # the code the interviewee submitted for the problem
+    question: str  # the question the interviewee is answering
+    audio_filepath: str  # the filepath to the audio of the interviewee's walkthrough
 
 
 class TTSRequest(BaseModel):
     """
-    Stores information aboyt a text-to-speech request
+    Stores information about a text-to-speech request
     """
-    transcript: str
+    transcript: str  # The transcript of the interviewee's walkthrough
 
 
 class TTSResponse(BaseModel):
     """
-    Returns the text-to-speech audio file produced by eleven labs
+    Returns the text-to-speech audio file produced by an external TTS provider
     """
-    audio_filepath: str
+    audio_filepath: str  # The audio transcript of the LLM evaluation
