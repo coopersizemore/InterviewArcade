@@ -66,6 +66,40 @@ function FeedbackPage() {
             }, 3000); // Simulate a 3-second delay
         };
 
+        // const fetchAudio = async () => {
+        //     console.log("Fetching AI voiceover...");
+        //     setIsAudioLoading(true); // Ensure loading is true at the start
+
+        //     try {
+        //         // The actual GET request to your backend endpoint
+        //         const response = await fetch('/feedback/transcript');
+
+        //         // It's crucial to check if the request was successful
+        //         if (!response.ok) {
+        //             throw new Error(`HTTP error! Status: ${response.status}`);
+        //         }
+
+        //         const data = await response.json(); // { "audio_filepath": "/path/to/audio.mp3" }
+
+        //         // --- This is the important part ---
+        //         // Prepend your backend's URL to the relative path
+        //         // In development, this might be 'http://localhost:5000'
+        //         // In production, it would be 'https://yourapi.com'
+        //         const backendUrl = process.env.REACT_APP_BACKEND_URL || ''; 
+        //         const fullAudioUrl = `${backendUrl}${data.audio_filepath}`;
+                
+        //         console.log("Audio loaded from:", fullAudioUrl);
+        //         setAudioUrl(fullAudioUrl);
+
+        //     } catch (error) {
+        //         console.error("Failed to fetch audio:", error);
+        //         // You could set an error state here to show a message to the user
+        //     } finally {
+        //         // This block runs whether the fetch succeeded or failed
+        //         setIsAudioLoading(false);
+        //     }
+        // };
+
         fetchAudio();
     }, []); // Empty array ensures this runs only once
 
