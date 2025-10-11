@@ -10,8 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@coreui/icons": "^3.0.1",
+    "@coreui/icons-react": "^2.3.0",
+    "@coreui/react": "^5.9.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^7.9.4"
   },
   "devDependencies": {
