@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from models import InterviewQuestion
+from models import InterviewQuestion, Company
 import json
 
 router = APIRouter()
