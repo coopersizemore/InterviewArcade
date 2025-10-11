@@ -31,10 +31,10 @@ class Company(BaseModel):
 class Review(BaseModel):
     """A structured review for either code or audio."""
     score: Optional[int] = 0  # Integer score out of 10
-    strengths_list = Optional[List[str]] = []  # Concise list of strengths
-    strengths_description = Optional[str] = ""  # Description of strengths
-    improvements_list = Optional[List[str]] = []  # Concise list of improvements
-    improvement_description = Optional[str] = ""  # Description of improvements
+    strengths_list: Optional[List[str]] = []  # Concise list of strengths
+    strengths_description: Optional[str] = ""  # Description of strengths
+    improvements_list: Optional[List[str]] = []  # Concise list of improvements
+    improvement_description: Optional[str] = ""  # Description of improvements
 
 
 class FeedbackResponse(BaseModel):
