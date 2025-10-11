@@ -21,7 +21,7 @@ dist-ssr
 *.sln
 *.sw?
 # API Keys
-../python-backend/.envpython-backend/.env
+../python-backend/.env
 *.env
 # Environment variables
 .env
