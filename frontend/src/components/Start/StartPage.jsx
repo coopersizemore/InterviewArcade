@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import GlowingCard from './GlowingCard';
+import './StartPage.css'
 
 function StartPage() {
     const navigate = useNavigate();
@@ -15,7 +16,13 @@ function StartPage() {
 
     return (
         // 1 Question, 5 Minutes, Happy Practicing!
-        <div className="home-page-container">
+        <div className="start-page-container">
+            <h2>Information</h2>
+            <ul className="information-list">
+                <li>1 Question</li>
+                <li>5 Minutes</li>
+                <li>Happy Practicing!</li>
+            </ul>
             <GlowingCard onClick={cardClick}/>
         </div>
     )
