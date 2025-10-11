@@ -39,26 +39,25 @@ async def get_interview_feedback(request: FeedbackRequest):
 
     # Map results into Review models with safe defaults
     code_review = Review(
-        score=str(code_result.get("score")) if code_result.get("score") is not None else None,
-        description=code_result.get("description"),
-        strengths=code_result.get("strengths") or [],
-        improvements=code_result.get("improvements") or [],
+        score=str(code_result.get("score")) if code_result.get("score") is not None else "0",
+        strengths_list=code_result.get("strengths_list") or [],
+        strengths_description=code_result.get("strengths_description") or "",
+        improvements_list=code_result.get("improvements_list") or [],
+        improvements_description=code_result.get("improvements_description") or "",
     )
 
     audio_review = Review(
-        score=str(audio_result.get("score")) if audio_result.get("score") is not None else None,
-        description=audio_result.get("description"),
-        strengths=audio_result.get("strengths") or [],
-        improvements=audio_result.get("improvements") or [],
-        transcript=audio_result.get("transcript"),
+        score=str(audio_result.get("score")) if audio_result.get("score") is not None else "0",
+        strengths_list=audio_result.get("strengths_list") or [],
+        strengths_description=audio_result.get("strengths_description") or "",
+        improvements_list=audio_result.get("improvements_list") or [],
+        improvements_description=audio_result.get("improvements_description") or "",
     )
 
-    overall_assessment = overall_result.get("description") or overall_result.get("raw_output")
+    overall_assessment = overall_result.get("description") or ""
 
     return FeedbackResponse(
         code_review=code_review,
         audio_review=audio_review,
-        overall_assessment=overall_assessment,
-        audio_filepath=str(audio_path),
-        raw_output={"code": code_result, "audio": audio_result, "overall": overall_result},
+        overall_assessment=overall_assessment
     )
