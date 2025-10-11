@@ -10,6 +10,7 @@ import Alert from 'react-bootstrap/Alert';
 
 const InterviewPage = () => {
     const [codeValue, setCodeValue] = useState('')
+    const[recordingAlert, setRecordingAlert] = useState(false)
     // things needed from previous screen - company name
     // components
     // left column with problem statement, description, expected outputs etc.
@@ -20,21 +21,21 @@ const InterviewPage = () => {
     // audio streamer needs to be used 
     
     // TODO: add useEffect for starting recording the first time screen is loaded
-    const [startFirstRecording, setStartFirstRecording] = useState(false);
+    const [startFirstRecording, setStartFirstRecording] = useState(true);
 
     useEffect(() => {
-        if (startFirstRecording){
+        if (true){
             // Make user aware that recording has started (alert?) - dismissable (for now)
             // Would like to fade alert on its own, but too much work for now
-            <Alert variant='info'> Audio recording has started! </Alert>            
+            setRecordingAlert(true)
             // START AUDIO RECORDING - and perform post request every 60 seconds of recording
-
+            
             // need to handle stopping audio recording outside of this somehow, with
             // the End Interview OnClick event
-            
+            console.log("This function is being called!")
         }
 
-    }, [startFirstRecording]);
+    }, []);
 
     return (
         // <CSidebar className='border-end'>
@@ -43,6 +44,8 @@ const InterviewPage = () => {
         //     </CSidebarHeader>
         // </CSidebar>
         <div style={{display: "flex", height: '100vh'}} >
+            {/* The below alert does not work yet */}
+        {/* {recordingAlert && <Alert variant='info' dismissible onClose={setRecordingAlert(false)}> Audio recording has started! </Alert>} */}
         <Sidebar style={{ width: '35vw', height: '100vh' }}>
             <Menu>
                 <MenuItem> Problem Title </MenuItem>
