@@ -22,7 +22,8 @@ const InterviewPage = () => {
         //     <CSidebarBrand>Problem Description</CSidebarBrand>
         //     </CSidebarHeader>
         // </CSidebar>
-        <Sidebar style={{ width: '40vw', height: '100vh' }}>
+        <div>
+        <Sidebar style={{ width: '35vw', height: '100vh' }}>
             <Menu>
                 <MenuItem> Problem Title </MenuItem>
                 <MenuItem> Problem Description </MenuItem>
@@ -31,6 +32,8 @@ const InterviewPage = () => {
                 <MenuItem> Sample Output & Output 2</MenuItem>
             </Menu>
         </Sidebar>
+        <button style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px'}}> End Interview! </button>
+        </div>
     )
 
     
