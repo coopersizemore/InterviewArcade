@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 // import {CSidebar, CSidebarHeader, CSidebarBrand} from '@coreui/react'
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import Editor from '@monaco-editor/react';
+import CodeEditor from './CodeEditor.jsx'
 
 
 const InterviewPage = () => {
+    const [codeValue, setCodeValue] = useState('')
     // things needed from previous screen - company name
     // components
     // left column with problem statement, description, expected outputs etc.
@@ -32,12 +34,15 @@ const InterviewPage = () => {
                 <MenuItem> Sample Output & Output 2</MenuItem>
             </Menu>
         </Sidebar>
-        <Editor defaultLanguage='python' theme='light'></Editor>
+        <CodeEditor 
+            value={codeValue} 
+            onChange={
+                (codeValue) => setValue(codeValue)
+            }
+        ></CodeEditor>
         <button style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px', justifyContent: 'center'}}> End Interview! </button>
         </div>
-    )
-
-    
+    )    
     
     
 }
