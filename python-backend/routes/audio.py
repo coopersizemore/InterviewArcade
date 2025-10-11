@@ -12,7 +12,7 @@ DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
 AUDIO_PATH = DATA_DIR / "recording.wav"
 
-@router.put("/")
+@router.post("/")
 def send_audio(request: AudioBlob):
     """
     Receives an audio chunk (base64-encoded) from the frontend,
