@@ -5,6 +5,7 @@ from models import InterviewQuestion, FeedbackRequest, FeedbackResponse
 import services
 import json
 
+# Run with uvicorn main:app --reload
 app = FastAPI()
 
 # Configure CORS to allow the React frontend to communicate with this backend
@@ -38,13 +39,28 @@ async def get_questions():
     """Endpoint to fetch all interview questions."""
     return QUESTIONS_DB
 
-@app.get("/api/questions/{question_id}", response_model=InterviewQuestion)
+@app.get("/api/questions/id/{question_id}", response_model=InterviewQuestion)
 async def get_question_by_id(question_id: int):
     """Endpoint to fetch a single question by its ID."""
     question = next((q for q in QUESTIONS_DB if q["id"] == question_id), None)
     if not question:
-        raise HTTPException(status_code=404, detail="Question not found")
+        raise HTTPException(status_code=404, detail=f"Question with id {id} doesn't exist")
     return question
+
+@app.get("/question/companyName/{company_name}", response_model=list[InterviewQuestion])
+async def get_question_by_company_name(company_name: str):
+    """Endpoint for getting all the questions for a specific company"""
+    questions = (q for q in QUESTIONS_DB if q["company"] == company_name)
+    return questions
+
+@app.get("/companies", response_model=list[str])
+async def get_companies():
+    """Endpoint to get a list of all companies"""
+    companies = set()
+    for q in QUESTIONS_DB:
+        for company in q["companies"]:
+            companies.add(company)
+    return list(companies)
 
 @app.post("/api/feedback", response_model=FeedbackResponse)
 async def get_interview_feedback(request: FeedbackRequest):

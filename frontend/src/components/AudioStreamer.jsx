@@ -9,9 +9,12 @@ export default function AudioStreamer() {
   const {start, stop} = useAudioRecorder(onChunk);
 
   return (
-    <div>
-        <button onClick={() => start(15000)}> Start Recording </button>
-        <button onClick={stop}> Stop Recording </button>
+    <div className="p-4 border rounded-lg w-80 mx-auto mt-8 text-center">
+      <h2>Audio Streamer</h2>
+      <div className="flex gap-4 justify-center mt-4">
+        <button onClick={() => start(1000)}>🎙 Start</button>
+        <button onClick={stop}>⏹ Stop</button>
+      </div>
     </div>
   );
 }
