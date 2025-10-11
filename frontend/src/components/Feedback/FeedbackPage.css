@@ -1,0 +1,20 @@
+.split-container {
+  display: grid;
+  /* Define two columns with a 2-to-1 ratio */
+  grid-template-columns: 65fr 35fr;
+  width: 100vw;
+  height: 100vh;
+}
+
+.left-pane {
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.right-pane {
+  padding: 20px;
+  background-color: #e0e0e0;
+  
+  /* The line is created the same way */
+  border-left: 2px solid #cccccc;
+}

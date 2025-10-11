@@ -15,7 +15,6 @@ function StartPage() {
     // }
 
     return (
-        // 1 Question, 5 Minutes, Happy Practicing!
         <div className="start-page-container">
             <h2>Information</h2>
             <ul className="information-list">
