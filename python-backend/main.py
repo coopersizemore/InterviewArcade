@@ -19,9 +19,9 @@ app.add_middleware(
 )
 
 # --- Include Routers ---
-from questions import router as questions_router
-from feedback import router as feedback_router
-from companies import router as companies_router
+from routes.questions import router as questions_router
+from routes.feedback import router as feedback_router
+from routes.companies import router as companies_router
 
 app.include_router(questions_router)
 app.include_router(feedback_router)
