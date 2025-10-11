@@ -1,20 +1,75 @@
 .split-container {
   display: grid;
-  /* Define two columns with a 2-to-1 ratio */
   grid-template-columns: 65fr 35fr;
   width: 100vw;
   height: 100vh;
+  font-family: sans-serif; /* Added a default font */
 }
 
 .left-pane {
-  padding: 20px;
-  background-color: #f0f0f0;
+  padding: 30px;
+  background-color: #ffffff;
+  display: flex;
+  gap: 30px; /* Adds space between the two feedback columns */
+  overflow-y: auto; /* Allows scrolling if content is too long */
 }
 
 .right-pane {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #f0f0f0;
+  border-left: 1px solid #cccccc;
+  overflow-y: auto;
+}
+
+/* --- Styles for the new FeedbackColumn component --- */
+
+.feedback-column {
+  flex: 1; /* Makes each column take up half the space in the left pane */
+  background-color: #f9f9f9;
+  border-radius: 8px;
   padding: 20px;
-  background-color: #e0e0e0;
-  
-  /* The line is created the same way */
-  border-left: 2px solid #cccccc;
+  border: 1px solid #e0e0e0;
+}
+
+.feedback-column h2 {
+  margin-top: 0;
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.score-badge {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.feedback-section h3 {
+  color: #555;
+  margin-top: 20px;
+}
+
+.feedback-section ul {
+  padding-left: 20px;
+  list-style-type: '✅ '; /* Fun checkmark for lists */
+}
+
+.feedback-section ul li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.feedback-section p {
+  background-color: #ffffff;
+  border-left: 4px solid #ddd;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 4px;
+  line-height: 1.6;
 }
