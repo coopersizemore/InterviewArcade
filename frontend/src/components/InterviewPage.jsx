@@ -22,7 +22,7 @@ const InterviewPage = () => {
         //     <CSidebarBrand>Problem Description</CSidebarBrand>
         //     </CSidebarHeader>
         // </CSidebar>
-        <div style={{height: '100vh'}}>
+        <div style={{display: "flex", height: '100vh'}} >
         <Sidebar style={{ width: '35vw', height: '100vh' }}>
             <Menu>
                 <MenuItem> Problem Title </MenuItem>
