@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 // import {CSidebar, CSidebarHeader, CSidebarBrand} from '@coreui/react'
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import Editor from '@monaco-editor/react';
 import CodeEditor from './CodeEditor.jsx'
+import Alert from 'react-bootstrap/Alert';
+
 
 
 const InterviewPage = () => {
@@ -17,6 +19,22 @@ const InterviewPage = () => {
     // for starters, does not need to actually detect voice, maybe it is a constant animation
     // audio streamer needs to be used 
     
+    // TODO: add useEffect for starting recording the first time screen is loaded
+    const [startFirstRecording, setStartFirstRecording] = useState(false);
+
+    useEffect(() => {
+        if (startFirstRecording){
+            // Make user aware that recording has started (alert?) - dismissable (for now)
+            // Would like to fade alert on its own, but too much work for now
+            <Alert variant='info'> Audio recording has started! </Alert>            
+            // START AUDIO RECORDING - and perform post request every 60 seconds of recording
+
+            // need to handle stopping audio recording outside of this somehow, with
+            // the End Interview OnClick event
+            
+        }
+
+    }, [startFirstRecording]);
 
     return (
         // <CSidebar className='border-end'>

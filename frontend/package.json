@@ -14,7 +14,9 @@
     "@coreui/icons-react": "^2.3.0",
     "@coreui/react": "^5.9.1",
     "@monaco-editor/react": "^4.7.0",
+    "bootstrap": "^5.3.8",
     "react": "^19.2.0",
+    "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.0",
     "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^7.9.4"
