@@ -1,0 +1,54 @@
+[
+  {
+    "id": 0,
+    "title": "Title",
+    "difficulty": "Difficulty",
+    "companies": ["Company"],
+    "categories": ["Category"],
+    "description": "Description",
+    "examples": [
+      {
+        "input": "Input",
+        "output": "Output",
+        "explanation": "Explanation"
+      }
+    ],
+    "constraints": [
+      "Constraint 1",
+      "Constraint 2"
+    ],
+    "starterCode": {
+      "python": "def function():\n    pass"
+    },
+    "hints": [
+      "Hint 1",
+      "Hint 2"
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Title",
+    "difficulty": "Difficulty",
+    "companies": ["Company"],
+    "categories": ["Category"],
+    "description": "Description",
+    "examples": [
+      {
+        "input": "Input",
+        "output": "Output",
+        "explanation": "Explanation"
+      }
+    ],
+    "constraints": [
+      "Constraint 1",
+      "Constraint 2"
+    ],
+    "starterCode": {
+      "python": "def function():\n    pass"
+    },
+    "hints": [
+      "Hint 1",
+      "Hint 2"
+    ]
+  }
+]
