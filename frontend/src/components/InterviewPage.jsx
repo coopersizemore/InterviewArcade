@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 // import {CSidebar, CSidebarHeader, CSidebarBrand} from '@coreui/react'
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-
+import Editor from '@monaco-editor/react';
 
 
 const InterviewPage = () => {
@@ -22,7 +22,7 @@ const InterviewPage = () => {
         //     <CSidebarBrand>Problem Description</CSidebarBrand>
         //     </CSidebarHeader>
         // </CSidebar>
-        <div>
+        <div style={{height: '100vh'}}>
         <Sidebar style={{ width: '35vw', height: '100vh' }}>
             <Menu>
                 <MenuItem> Problem Title </MenuItem>
@@ -32,7 +32,8 @@ const InterviewPage = () => {
                 <MenuItem> Sample Output & Output 2</MenuItem>
             </Menu>
         </Sidebar>
-        <button style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px'}}> End Interview! </button>
+        <Editor defaultLanguage='python' theme='light'></Editor>
+        <button style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px', justifyContent: 'center'}}> End Interview! </button>
         </div>
     )
 
