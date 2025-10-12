@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from models import FeedbackRequest, FeedbackResponse, Review, AudioResponse
+from models import FeedbackRequest, FeedbackResponse, Review, AudioResponse, TTSRequest, TTSResponse
 from pathlib import Path
 import asyncio
 
@@ -86,14 +86,14 @@ async def get_interview_feedback(request: FeedbackRequest):
     )
 
 
-@router.post("/tts")
-async def transcript_to_audio(transcript: str):
+@router.post("/tts", response_model=TTSResponse)
+async def transcript_to_audio(request: TTSRequest):
     """
     Converts a transcript string into an audio file using ElevenLabs.
     Returns the generated audio file as binary data.
     """
     try:
-        audio_bytes = await textToSpeech(transcript)
+        audio_bytes = await textToSpeech(request.transcript)
         return AudioResponse(content=audio_bytes, media_type="audio/wav")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

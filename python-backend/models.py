@@ -63,9 +63,9 @@ class TTSRequest(BaseModel):
 
 class TTSResponse(BaseModel):
     """
-    Returns the text-to-speech audio file produced by an external TTS provider
+    Returns the text-to-speech audio file produced by elevenlabs
     """
-    audio_filepath: str  # The audio transcript of the LLM evaluation
+    audio_bytes: str  # The audio transcript of the LLM evaluation, as a binary file
 
 
 class AudioBlob(BaseModel):
@@ -74,10 +74,3 @@ class AudioBlob(BaseModel):
     """
     filename: str
     data: str  # base64-encoded audio chunk from frontend
-
-
-class AudioResponse(BaseModel):
-    """
-    Stores the audio response from Elevenlabs
-    """
-    content: str
