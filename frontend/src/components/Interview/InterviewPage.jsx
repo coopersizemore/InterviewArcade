@@ -63,8 +63,9 @@ const InterviewPage = () => {
 
         // while waiting for reponse, navigate to loading screen
         try {
-            navigate("/loading", { state: { data: codeValue } })
+            // navigate("/loading", { state: { data: codeValue } })
 
+            setIsLoading(true)
 
             // This needs to happen in loading screen
             const response = await fetch (`${BASE_URL}/api/feedback`, {
@@ -92,7 +93,10 @@ const InterviewPage = () => {
 
     }        
 
-    
+    // useEffect(() => {
+
+    // }, [isLoading])
+
     useEffect(() => {
         // Notify user recording has started
         setRecordingAlert(true)
