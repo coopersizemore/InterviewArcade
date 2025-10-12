@@ -6,7 +6,7 @@ import StartPage from './components/Start/StartPage'
 import InterviewPage from './components/Interview/InterviewPage'
 import FeedbackPage from './components/Feedback/FeedbackPage'
 import BreakoutLoadingScreen from "./components/Loading/BreakoutLoadingScreen";
-
+import RecorderPage from './components/Interview/RecorderPage'
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
       <Route path="/interview" element={<InterviewPage />} />
       <Route path="/loading" element={<BreakoutLoadingScreen />} />
       <Route path="/feedback" element={<FeedbackPage />} />
+      <Route path="/audiotest" element={<RecorderPage />} />
     </Routes>
   );
 }
