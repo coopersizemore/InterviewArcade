@@ -29,7 +29,7 @@ def build_audio_prompt(question: str, code: str) -> str:
     "strengths_list": [string],  // A list of the candidate's walkthrough strengths
     "strengths_description": string,  // A description of the candidate's walkthrough strengths
     "improvements_list": [string],  // A list of potential improvements for the candidate's walkthrough
-    "improvement_description": string,  // A description of improvements for the candidate's walkthrough
+    "improvements_description": string,  // A description of improvements for the candidate's walkthrough
     }}
     """
 
@@ -55,7 +55,7 @@ def build_code_prompt(question: str, code: str) -> str:
     "strengths_list": [string],  // A list of the candidate's coding strengths
     "strengths_description": string,  // A description of the candidate's coding strengths
     "improvements_list": [string],  // A list of potential improvements for the candidate's code
-    "improvement_description": string,  // A description of improvements for the candidate's code
+    "improvements_description": string,  // A description of improvements for the candidate's code
     }}
     """
 
