@@ -130,7 +130,7 @@ function blobToBase64(blob) {
                 <MenuItem> {question?.description} </MenuItem>
                 {/* 2 columns - one with sample input, and another with sample output */}
                 {/* For each example, populate thingy */}
-                <MenuItem className='code'> {question.}Sample Input & Output 1</MenuItem>
+                <MenuItem className='code'> Sample Input & Output 1</MenuItem>
                 {/* For each constraint, populate as bullet point */}
                 <MenuItem> Sample Output & Output 2</MenuItem>
                 {/* For each hint, populate as bullet point */}
