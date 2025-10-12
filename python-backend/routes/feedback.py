@@ -2,7 +2,8 @@ from fastapi import APIRouter, HTTPException
 from models import FeedbackRequest, FeedbackResponse, Review, AudioResponse
 from pathlib import Path
 
-from services import gemini_service, elevenlabs_service
+from services import gemini_service
+from services.elevenlabs_service import textToSpeech
 
 router = APIRouter(prefix="/api/feedback")
 
@@ -69,7 +70,7 @@ async def transcript_to_audio(transcript: str):
     Returns the generated audio file as binary data.
     """
     try:
-        audio_bytes, mime_type = await elevenlabs_service.text_to_speech(transcript)
+        audio_bytes = await textToSpeech(transcript)
         return AudioResponse(content=audio_bytes, media_type="audio/wav")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
