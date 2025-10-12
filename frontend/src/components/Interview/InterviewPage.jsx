@@ -180,7 +180,7 @@ const InterviewPage = () => {
         <div style={{display: "inline-block", width: '65vw', height: '100vh'}}>
             <CodeEditor style={{display: "inline", width: '65vw', height: '100vh'}}            
             value={question.starterCode.python} 
-            onClick={() => setCodeValue(codeValue)}
+            onChange={(newCode) => setCodeValue(newCode)}
             >
             </CodeEditor>
         </div>
