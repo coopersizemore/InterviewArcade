@@ -11,8 +11,17 @@ import Alert from 'react-bootstrap/Alert';
 const InterviewPage = () => {
     const [codeValue, setCodeValue] = useState('')
     const[recordingAlert, setRecordingAlert] = useState(false)
+
+    const endInterview = () => {
+        // stop recording
+        // do POST request with code solution
+        // while waiting for reponse, navigate to loading screen
+        // when done, pass in the response into feedback page
+    }
+    
     // things needed from previous screen - company name
     // components
+
     // left column with problem statement, description, expected outputs etc.
     // most of the screen will be an empty code editor to write code in
         // there should be a component for this
@@ -24,12 +33,13 @@ const InterviewPage = () => {
     const [startFirstRecording, setStartFirstRecording] = useState(true);
 
     useEffect(() => {
+        // call get route for getting question via question ID here
         if (true){
             // Make user aware that recording has started (alert?) - dismissable (for now)
             // Would like to fade alert on its own, but too much work for now
             setRecordingAlert(true)
             // START AUDIO RECORDING - and perform post request every 60 seconds of recording
-            
+
             // need to handle stopping audio recording outside of this somehow, with
             // the End Interview OnClick event
             console.log("This function is being called!")
@@ -61,7 +71,11 @@ const InterviewPage = () => {
                 (codeValue) => setValue(codeValue)
             }
         ></CodeEditor>
-        <button style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px', justifyContent: 'center'}}> End Interview! </button>
+        <button 
+            style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px', justifyContent: 'center'}}
+            onClick={endInterview}> 
+            End Interview! 
+        </button>
         </div>
     )    
     
