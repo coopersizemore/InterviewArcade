@@ -14,12 +14,14 @@ function StartPage() {
         setError(null); // Clear any previous errors
 
         // Read the instructions (company name or random flag) from the previous page
-        const { company, random } = location.state || {};
+        const { company, category, random } = location.state || {};
         let apiUrl = '';
 
         // Build the correct API URL based on the instructions
         if (company) {
             apiUrl = `http://localhost:8000/api/questions/companyName/${company}`;
+        } else if (category) {
+            apiUrl = `http://localhost:8000/api/questions/categoryName/${category}`;
         } else if (random) {
             apiUrl = `http://localhost:8000/api/questions/random`;
         } else {

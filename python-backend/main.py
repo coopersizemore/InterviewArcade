@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 tags_metadata = [
     {"name": "questions", "description": "Browse and retrieve interview questions."},
     {"name": "companies", "description": "List companies and filter questions by company."},
+    {"name": "categories", "description": "List problem categories and filter problems by category."},
     {"name": "feedback", "description": "Submit interview attempts and get AI-generated feedback."},
     {"name": "audio", "description": "Upload and manage audio files."},
 ]
@@ -38,6 +39,7 @@ from routes.questions import router as questions_router
 from routes.feedback import router as feedback_router
 from routes.companies import router as companies_router
 from routes.audio import router as audio_router
+from routes.categories import router as category_router
 
 @app.get("/live", tags=["health"])
 async def live_check():
@@ -51,3 +53,4 @@ app.include_router(questions_router)
 app.include_router(feedback_router)
 app.include_router(companies_router)
 app.include_router(audio_router)
+app.include_router(category_router)

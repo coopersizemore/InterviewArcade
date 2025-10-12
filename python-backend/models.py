@@ -28,6 +28,14 @@ class Company(BaseModel):
     description: Optional[str] = ""
 
 
+class Category(BaseModel):
+    """
+    Stores information about a category
+    """
+    id: int
+    name: str
+
+
 class Review(BaseModel):
     """A structured review for either code or audio."""
     score: Optional[int] = 0  # Integer score out of 10

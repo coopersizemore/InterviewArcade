@@ -92,6 +92,9 @@ function HomePage() {
       } else if (selectedOption === 'random') {
         // console.log("Navigating to start page with random option...");
         navigate('/start', { state: { random: true, count: 1 } });
+      } else if (selectedOption === 'category') {
+        console.log("Navigating to the categories page");
+        navigate('/categories', { state: { random: true, count: 1 } });
       }
     }
 

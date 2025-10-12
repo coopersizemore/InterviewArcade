@@ -35,3 +35,9 @@ async def get_question_by_company_name(company_name: str):
     questions = [q for q in QUESTIONS if company_name in q.get("companies", [])]
     return random.choice(questions)
 
+
+@router.get("/categoryName/{category_name}", response_model=InterviewQuestion)
+async def get_question_by_category_name(category_name: str):
+    """Endpoint for getting a random question from a specific category"""
+    questions = [q for q in QUESTIONS if category_name in q.get("categories", [])]
+    return random.choice(questions)
