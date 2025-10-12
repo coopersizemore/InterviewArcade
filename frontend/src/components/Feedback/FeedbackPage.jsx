@@ -78,14 +78,15 @@ function FeedbackPage() {
         // --- Code Review ---
         doc.text("Code Review:", 40, y);
         y += 20;
-        const codeReviewLines = doc.splitTextToSize(feedbackData.code_review || "No code review available.", 520);
+        const codeReviewLines = doc.splitTextToSize(JSON.stringify(feedbackData.code_review, null, 2) || "No code review available.", 520);
         doc.text(codeReviewLines, 40, y);
         y += codeReviewLines.length * lineHeight + 10;
 
         // --- Audio Review ---
         doc.text("Audio Review:", 40, y);
         y += 20;
-        const audioReviewLines = doc.splitTextToSize(feedbackData.audio_review || "No audio review available.", 520);
+        // If feedbackData.audio_review is an object, stringify it; otherwise, use as is
+        const audioReviewLines = doc.splitTextToSize( JSON.stringify(feedbackData.audio_review, null, 2), 520);
         doc.text(audioReviewLines, 40, y);
         y += audioReviewLines.length * lineHeight + 10;
 

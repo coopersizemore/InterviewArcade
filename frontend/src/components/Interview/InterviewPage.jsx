@@ -225,7 +225,7 @@ const InterviewPage = () => {
                                 </button>
                                 {showHints && (
                                     <div>
-                                        <h2 style={{ "text-align": 'left'}} >Hints</h2>
+                                        <h2 style={{ "textAlign": 'left'}} >Hints</h2>
                                         {question.hints.map((hint, index) => (
                                             <div key={index}>
                                                 {hint}
