@@ -168,7 +168,7 @@ const InterviewPage = () => {
   
             <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
                 <Menu style={{ padding: "0 30px" }}>                
-                    <div className='problem-title' style={{ "fontSize": '30px', "fontWeight": 'bold', }}>
+                    <div className='problem-title' style={{ "fontSize": '40px', "fontWeight": 'bold', }}>
                         {question?.title}
                     </div>
                     <div className="problem-description">
