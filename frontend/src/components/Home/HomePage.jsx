@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import gsap from 'gsap';
 import './HomePage.css'
 
@@ -66,6 +66,12 @@ class RadioButtonEffect {
 function HomePage() {
     const navigate = useNavigate();
 
+    const [selectedOption, setSelectedOption] = useState('');
+
+    const handleOptionChange = (event) => {
+      setSelectedOption(event.target.value);
+    };
+
     useEffect(() => {
         const radioBtnGroups = document.querySelectorAll(".radio-btn-group");
         if (radioBtnGroups.length > 0) {
@@ -77,8 +83,15 @@ function HomePage() {
         });
     }, []);
 
-    function goToStartPage() {
-        navigate('/start');
+    function handleConfirmClick() {
+      console.log(selectedOption)
+      if (selectedOption === 'company') {
+        // console.log("Navigating to company page...");
+        navigate('/companies');
+      } else if (selectedOption === 'random') {
+        // console.log("Navigating to start page with random option...");
+        navigate('/start', { state: { random: true, count: 1 } });
+      }
     }
 
     return (
@@ -87,7 +100,8 @@ function HomePage() {
 
             <div className="container">
                 <div className="radio-btn-group">
-                    <input type="radio" name="stagger-radio-group" value="1" id="input-one" />
+                    <input type="radio" name="stagger-radio-group" value="company" 
+                      checked={selectedOption === 'company'} onChange={handleOptionChange}id="input-one" />
                     <label htmlFor="input-one">
                     <span>Company</span>
                     <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
@@ -123,7 +137,8 @@ function HomePage() {
                 </div>
 
                 <div className="radio-btn-group">
-                    <input type="radio" name="stagger-radio-group" value="2" id="input-two" />
+                    <input type="radio" name="stagger-radio-group" value="random" 
+                      checked={selectedOption === 'random'} onChange={handleOptionChange} id="input-two" />
                     <label htmlFor="input-two">
                     <span>Random</span>
                     <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
@@ -159,7 +174,8 @@ function HomePage() {
                 </div>
 
                 <div className="radio-btn-group">
-                    <input type="radio" name="stagger-radio-group" value="3" id="input-three" />
+                    <input type="radio" name="stagger-radio-group" value="category"  
+                      checked={selectedOption === 'category'} onChange={handleOptionChange} id="input-three" />
                     <label htmlFor="input-three">
                     <span>Category</span>
                     <svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
@@ -196,7 +212,7 @@ function HomePage() {
             </div>
 
             <div className="confirm-button-container">
-                <button onClick={goToStartPage} className="confirm-button">Confirm</button>
+                <button onClick={handleConfirmClick} className="confirm-button">Confirm</button>
             </div>
         </div>
     )
