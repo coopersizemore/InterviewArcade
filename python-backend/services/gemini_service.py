@@ -13,7 +13,9 @@ def build_audio_prompt(question: str, code: str) -> str:
     technical interview of a candidate's code answer to a question, 
     and an audio description walking you through their answer.
     Respond directly to the candidate with a single valid JSON object only.
-    Do not include explanations, markdown, or extra text.
+    In your evaluation, consider if the candidate clearly explained their thought process, 
+    understood the problem, and considered edge cases. Do not include explanations,
+    markdown, or extra text.
 
     Question: 
     {question}
