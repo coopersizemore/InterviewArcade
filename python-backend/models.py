@@ -52,7 +52,6 @@ class FeedbackRequest(BaseModel):
     """
     code: str  # the code the interviewee submitted for the problem
     question: str  # the question the interviewee is answering
-    audio_filepath: str  # the filepath to the audio of the interviewee's walkthrough
 
 
 class TTSRequest(BaseModel):

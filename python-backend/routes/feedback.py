@@ -20,10 +20,10 @@ async def get_interview_feedback(request: FeedbackRequest):
     - overall assessment (focus='overall')
     """
 
-    audio_path = Path(request.audio_filepath)
+    audio_path = "data/recording.wav"
     if not audio_path.exists():
         raise HTTPException(
-            status_code=400, detail=f"audio_filepath not found: {request.audio_filepath}"
+            status_code=400, detail=f"audio_filepath not found: {audio_path}"
         )
 
     # Kick off all three Gemini requests concurrently
