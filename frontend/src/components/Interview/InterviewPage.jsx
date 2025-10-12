@@ -7,22 +7,34 @@ import CodeEditor from './CodeEditor.jsx'
 import Alert from 'react-bootstrap/Alert';
 import { BASE_URL } from '../../config.js';
 import useAudioRecorder from "../../hooks/useAudioRecorder";
+import './InterviewPage.css'
 
 
 const InterviewPage = () => {
     const location = useLocation();
-    const { questionId } = location.state || {};
+    const { question } = location.state || {};
     const [codeValue, setCodeValue] = useState('')
     const[recordingAlert, setRecordingAlert] = useState(false)
     const[error, setError] = useState('')
     const[data, setData] = useState('')
 
 
+// ChatGPT 
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
+}
+
     const onChunk = useCallback(async (blob) => {
-        // As per existing code, this may need to be a POST request to the backend...
+        
         const payload = {
             filename: 'audio_file',
-            data: blob
+            // ENCODE from binary to base64
+            data: blob.toString('base64')
         }
         try{
             const response = await fetch(`${BASE_URL}/api/audio`,{
@@ -48,10 +60,24 @@ const InterviewPage = () => {
         // stop recording
         stopAudio()
         // do POST request with code solution
-        
+        console.log(codeValue)
 
         // while waiting for reponse, navigate to loading screen
-
+        try {
+            const response = await fetch (`${BASE_URL}/api/feedback`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        question: question.description,
+                        code: codeValue                        
+                    }
+                )
+            }
+            )
+        }
         // when done, pass in the response into feedback page
 
     }
@@ -70,20 +96,20 @@ const InterviewPage = () => {
 
     useEffect(() => {
         // call get route for getting question via question ID here
-        const fetchProblemInfo = async () => {
-            try{
-                const response = await fetch(`${BASE_URL}/api/questions/id/${questionId}`)
-                const result = await response.json()
-                setData(result)
-            } catch (err) {
-                setError(err.message)                
-            }
+        // const fetchProblemInfo = async () => {
+        //     try{
+        //         const response = await fetch(`${BASE_URL}/api/questions/id/${questionId}`)
+        //         const result = await response.json()
+        //         setData(result)
+        //     } catch (err) {
+        //         setError(err.message)                
+        //     }
             
-            setError('')
-        }
+        //     setError('')
+        // }
 
-        // GET INFO ON PROBLEM
-        fetchProblemInfo()
+        // // GET INFO ON PROBLEM
+        // fetchProblemInfo()
         // Notify user recording has started
         setRecordingAlert(true)
         // Start recording
@@ -93,24 +119,28 @@ const InterviewPage = () => {
 
     return (
        
-        <div>
+        <div style={{display: "flex", height: '100vh'}}>
             {/* The below alert does not work yet */}
 
         {recordingAlert && <Alert variant='info' dismissible onClose={setRecordingAlert(false)}> Audio recording has started! </Alert>}        
         {error && <Alert variant='danger'> Something went wrong! Please refresh! </Alert>}
         <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
             <Menu>
-                <MenuItem> {data?.title} </MenuItem>
-                <MenuItem> {data?.description} </MenuItem>
+                <MenuItem className='code'> {question?.title} </MenuItem>
+                <MenuItem> {question?.description} </MenuItem>
                 {/* 2 columns - one with sample input, and another with sample output */}
-                <MenuItem> Sample Input & Output 1</MenuItem>
+                {/* For each example, populate thingy */}
+                <MenuItem className='code'> {question.}Sample Input & Output 1</MenuItem>
+                {/* For each constraint, populate as bullet point */}
                 <MenuItem> Sample Output & Output 2</MenuItem>
+                {/* For each hint, populate as bullet point */}
             </Menu>
         </Sidebar>
-        <div style={{display: "inline-block", width: '64.96vw', height: '100vh'}}>
-            <CodeEditor style={{display: "inline", width: '64.96vw', height: '100vh'}}>
-            value={codeValue} 
-            onClick={() => setCodeValue(newValue)}
+        <div style={{display: "inline-block", width: '65vw', height: '100vh'}}>
+            <CodeEditor style={{display: "inline", width: '65vw', height: '100vh'}}            
+            value={question.starterCode.python} 
+            onClick={() => setCodeValue(codeValue)}
+            >
             </CodeEditor>
         </div>
         <button 
