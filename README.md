@@ -38,3 +38,15 @@ We used a React.js front end that connects to a a Python FastAPI backend. The ba
 ## What's next for InterviewArcade
 - Real-time conversations with AI to better simulate the real technical interview experience.
 - Implement **Behavioral Interview** preparation!
+
+## Citations
+HomePage radio buttons: https://codepen.io/jdillon/pen/qEWOGxm
+StartPage start button: https://codepen.io/thebabydino/pen/WNVPdJg
+PacMan button: https://codepen.io/konstantindenerz/pen/dyrzjPq
+LoadingScreen: Gemini, Prompt: “We've decided on breakout instead. How would I make a retro 'breakout' game loading screen in React?”
+Generating Mock Feedback Data: Gemini
+Feedback Column Styling: Gemini
+Feedback Page Styling: Gemini
+Companies Styling: Gemini
+We used AI to debug our code, and generate helpful suggestions for styling, and boilerplate code which we modified as we needed.
+
