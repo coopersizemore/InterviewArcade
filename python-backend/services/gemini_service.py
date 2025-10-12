@@ -14,13 +14,14 @@ def build_audio_prompt(question: str, code: str) -> str:
     and an audio description walking you through their answer.
     Respond directly to the candidate with a single valid JSON object only.
     In your evaluation, consider if the candidate clearly explained their thought process, 
-    understood the problem, and considered all edge cases. 
+    understood the problem, and considered all edge cases.
+    If the audio is unintelligible or nonexistent, consider this a poor walkthrough.
     Do not include explanations, markdown, or extra text.
 
     Question: 
     {question}
 
-    Candidate code answer:
+    Candidate code answer: (If empty, consider this a severe failure)
     {code}
 
     You should follow the following format EXACTLY, 
@@ -51,7 +52,7 @@ def build_code_prompt(question: str, code: str) -> str:
     Question: 
     {question}
 
-    Candidate code answer:
+    Candidate code answer: (If empty, consider this a severe failure)
     {code} 
 
     You should follow the following format EXACTLY, 
@@ -81,7 +82,7 @@ def build_overall_prompt(question: str, code: str) -> str:
     Question: 
     {question}
 
-    Candidate code answer:
+    Candidate code answer: (If empty, consider this a severe failure)
     {code}
 
     Your response should follow the following format EXACTLY. In the JSON object, the string value should be

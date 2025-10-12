@@ -30,6 +30,15 @@ const InterviewPage = () => {
     const[error, setError] = useState('')    
     const[isLoading, setIsLoading] = useState(false)
 
+    const INTERVIEW_DURATION = 300;  // The duration of the interview in seconds
+
+    // More state for the timer
+    const [timeRemaining, setTimeRemaining] = useState(INTERVIEW_DURATION);  // Set to 300 seconds, or 5 minutes
+    
+    // Defining dynamic timer hue
+    const hue = (timeRemaining / INTERVIEW_DURATION) * 120
+    const timerColor = `hsl(${hue}, 90%, 45%)`
+
     const onChunk = useCallback(async (blob) => {
         console.log("CHUNKIN")
         
@@ -96,26 +105,47 @@ const InterviewPage = () => {
         }
         // when done, pass in the response into feedback page
 
-    }        
-
-
+    }    
+    
+    // Manages the stopwatch
     useEffect(() => {
-    const initializeRecording = async () => {
-        try {
-            await startAudio();            
-        } catch (error) {
-            // Handle the case where the user denies microphone permission
-            setError("Microphone access was denied. Please refresh and grant permission.");
+        if (timeRemaining <= 0) {
+            endInterview();
+            return;
         }
-    };
 
-    initializeRecording();
+        const timerId = setInterval(() => {
+            setTimeRemaining(prevTime => prevTime - 1);
+        }, 1000);
 
-    // The cleanup function is crucial for stopping the mic when the user navigates away
-    return () => {
-        stopAudio();
-    };
-}, [startAudio, stopAudio]); // The dependency array is now correct and stable
+        return () => clearInterval(timerId);
+    }, [timeRemaining, endInterview]);
+
+    // Handles stopping and starting the audio recording
+    useEffect(() => {
+        const initializeRecording = async () => {
+            try {
+                await startAudio();            
+            } catch (error) {
+                // Handle the case where the user denies microphone permission
+                setError("Microphone access was denied. Please refresh and grant permission.");
+            }
+        };
+
+        initializeRecording();
+
+        // The cleanup function is crucial for stopping the mic when the user navigates away
+        return () => {
+            stopAudio();
+        };
+    }, [startAudio, stopAudio]); // The dependency array is now correct and stable
+
+    // Helper function for time conversion
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
 
     if (isLoading) {
         return (
@@ -124,76 +154,84 @@ const InterviewPage = () => {
     }
 
     return (
+        <div style={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
+            <div className="app-bar">
+                <div className="app-bar-title">Interview Arcade</div>
+                <div className="stopwatch" style={{backgroundColor: timerColor}}>
+                    {formatTime(timeRemaining)} / 5:00
+                </div>
+            </div>
        
         <div style={{display: "flex", height: '100vh'}}>
             {/* The below alert does not work yet */}
   
-        <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
-            <Menu style={{ padding: "0 30px" }}>                
-                <div className='problem-title' style={{ "fontSize": '20px' }}>
-                    {question?.title}
-                </div>
-                <div className="problem-description">
-                    {question?.description}
-                </div>
-                {/* 2 columns - one with sample input, and another with sample output */}
-                {/* For each example, populate thingy */}
+            <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
+                <Menu style={{ padding: "0 30px" }}>                
+                    <div className='problem-title' style={{ "font-size": '20px' }}>
+                        {question?.title}
+                    </div>
+                    <div className="problem-description">
+                        {question?.description}
+                    </div>
+                    {/* 2 columns - one with sample input, and another with sample output */}
+                    {/* For each example, populate thingy */}
 
-                {
-                    question?.examples?.length > 0 && (
-                        <h2>Examples</h2>
-                    )
-                }
-                {question?.examples?.map((example, index) => (
-                    <div key={index}>
-                        <div className="row">
-                            <div className="input">{example.input}</div>
-                            <div className="output">{example.output}</div>
+                    {
+                        question?.examples?.length > 0 && (
+                            <h2>Examples</h2>
+                        )
+                    }
+                    {question?.examples?.map((example, index) => (
+                        <div key={index}>
+                            <div className="row">
+                                <div className="input">{example.input}</div>
+                                <div className="output">{example.output}</div>
+                            </div>
+                            <div className="explanation">{example.explanation}</div>
                         </div>
-                        <div className="explanation">{example.explanation}</div>
-                    </div>
-                ))
-                }
+                    ))
+                    }
 
-                {
-                    question?.constraints?.length > 0 && (
-                        <h2>Constraints</h2>
-                    )
-                }
+                    {
+                        question?.constraints?.length > 0 && (
+                            <h2>Constraints</h2>
+                        )
+                    }
 
-                {question?.constraints?.map((constraint, index) => (
-                    <div key={index}>
-                        {constraint}
-                    </div>
-                ))
-                }
+                    {question?.constraints?.map((constraint, index) => (
+                        <div key={index}>
+                            {constraint}
+                        </div>
+                    ))
+                    }
 
-                {
-                    question?.hints?.length > 0 && (
-                        <h2>Hints</h2>
-                    )
-                }
+                    {
+                        question?.hints?.length > 0 && (
+                            <h2>Hints</h2>
+                        )
+                    }
 
-                {question?.hints?.map((hint, index) => (
-                    <div key={index}>
-                        {hint}
-                    </div>
-                ))
-                }                            
-            </Menu>
-        </Sidebar>
-        <div style={{display: "inline-block", width: '65vw', height: '100vh'}}>
-            <CodeEditor style={{display: "inline", width: '65vw', height: '100vh'}}            
-            value={question.starterCode.python} 
-            onChange={(newCode) => setCodeValue(newCode)}
-            >
-            </CodeEditor>
-        </div>
-        <button 
-            style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px', justifyContent: 'center', zIndex: 10}}
-            onClick={endInterview}> 
-            End Interview! 
-        </button>
+                    {question?.hints?.map((hint, index) => (
+                        <div key={index}>
+                            {hint}
+                        </div>
+                    ))
+                    }                            
+                </Menu>
+            </Sidebar>
+            <div style={{display: "inline-block", width: '65vw', height: '100vh'}}>
+                <CodeEditor style={{display: "inline", width: '65vw', height: '100vh'}}            
+                value={question.starterCode.python} 
+                onChange={(newCode) => setCodeValue(newCode)}
+                >
+                </CodeEditor>
+            </div>
+            <button 
+                style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px', justifyContent: 'center', zIndex: 10}}
+                onClick={endInterview}> 
+                End Interview! 
+            </button>
+            </div>
         </div>
     )    
     

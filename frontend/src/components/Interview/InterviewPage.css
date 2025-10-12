@@ -15,3 +15,29 @@ body {
 .problem-description {
     padding: 20px 0;
 }
+
+.app-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    height: 60px;
+    background-color: #1e293b;
+    color: #e2e8f0;
+    flex-shrink: 0;
+    border-bottom: 1px solid #334155;
+}
+
+.app-bar-title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.stopwatch {
+    font-size: 18px;
+    font-family: 'monospace';
+    background-color: #334155;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: bold;
+}
