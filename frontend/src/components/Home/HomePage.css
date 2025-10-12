@@ -6,6 +6,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 .confirm-button {
@@ -19,9 +20,10 @@ h1 {
   font-size: 60px;
 }
 
-h2 {
+h3 {
     color: red;
     text-align: center;
+    font-size: 25px;
 }
 
 h2, button {

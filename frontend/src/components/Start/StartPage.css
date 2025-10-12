@@ -4,6 +4,11 @@
     align-items: center;
 }
 
+h2 {
+    font-size: 50px;
+    color: red;
+}
+
 .information-list {
     color: white;
 }

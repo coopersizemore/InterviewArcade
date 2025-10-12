@@ -98,7 +98,7 @@ function HomePage() {
     return (
         <div className="home-page">
             <h1>Welcome to Interview Arcade!</h1>
-            <h2>Select a question category and hit confirm</h2>
+            <h3>Select a question category and hit confirm</h3>
 
             <div className="container">
                 <div className="radio-btn-group">
