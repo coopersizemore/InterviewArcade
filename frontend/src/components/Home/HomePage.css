@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap");
+
+/** Element Location Adjustments */
+.home-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm-button {
+    margin-top: 50px;
+}
+
+/** Same font for consistency across the page */
+h2 {
+    color: red;
+    text-align: center;
+}
+
+h2, button {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 500;
+  font-style: italic;
+}
+
+
+/** Retro futuristic button styles */
+html,
+body {
+  height: 100%;
+  margin: 0
+}
+
+body {
+  background-color: #3d3e4a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.radio-btn-group {
+  margin: 10px;
+}
+
+input[type="radio"] {
+  opacity: 0;
+  position: absolute;
+}
+
+input[type="radio"]:checked + label {
+  &::before {
+    box-shadow: 0 0 20px 2px #0763f7;
+  }
+
+  span {
+    color: #9c092b;
+  }
+}
+
+input[type="radio"]:focus + label {
+  &::before {
+    box-shadow: 0 0 20px 2px #0763f7;
+  }
+}
+
+label {
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-weight: 500;
+  font-style: italic;
+  align-items: center;
+  justify-content: center;
+  font-family: "IBM Plex Mono", monospace;
+  height: 50px;
+  padding: 0 30px;
+  position: relative;
+
+  &::before {
+    background-color: #24252c;
+    background-image: repeating-linear-gradient(
+      0deg,
+      #181a29,
+      #181a29 1px,
+      #202436 1px,
+      #202436 2px
+    );
+    border-radius: 10px;
+    box-shadow: 0 0 0 0 #0763f7;
+    content: "";
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    transform: skew(-15deg);
+    transition: box-shadow 350ms;
+    width: 100%;
+    z-index: -1;
+  }
+
+  span {
+    transition: color 350ms;
+    z-index: 1;
+  }
+
+  svg {
+    border-radius: 10px;
+    overflow: hidden;
+    position: absolute;
+    transform: skew(-15deg);
+
+    rect {
+      fill: #76b3fa;
+      shape-rendering: crispEdges;
+    }
+  }
+}
+
+
