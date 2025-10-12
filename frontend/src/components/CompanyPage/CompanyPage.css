@@ -1,0 +1,93 @@
+/* --- Retro Theme Variables --- */
+:root {
+    --neon-cyan: #00ffff;
+    --neon-magenta: #ff00ff;
+    --dark-bg: #0a0a0a;
+    --header-font: 'Press Start 2P', cursive;
+    --body-font: 'VT323', monospace;
+}
+
+/* --- Main Container & Background --- */
+.companies-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    width: 100vw;
+    min-height: 100vh;
+    background-color: var(--dark-bg);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+/* CRT Scanline Overlay */
+.companies-container::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.5) 1px, transparent 1px, transparent 3px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.page-title {
+    font-family: var(--header-font);
+    font-size: 2rem;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+    margin-bottom: 40px;
+    z-index: 2;
+}
+
+/* --- Company Card Grid --- */
+.company-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1200px;
+    z-index: 2;
+}
+
+.company-card {
+    padding: 20px;
+    border: 2px solid var(--neon-magenta);
+    background-color: rgba(10, 10, 10, 0.7);
+    text-align: center;
+    font-family: var(--body-font);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+.company-card:hover {
+    background-color: var(--neon-magenta);
+    color: var(--dark-bg);
+    box-shadow: 0 0 15px var(--neon-magenta), 0 0 25px var(--neon-magenta);
+    text-shadow: 0 0 5px var(--dark-bg);
+}
+
+/* --- Loading State Styling --- */
+.loading-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--dark-bg);
+    color: var(--neon-cyan);
+    font-family: var(--header-font);
+    font-size: 2rem;
+    text-shadow: 0 0 10px var(--neon-cyan);
+    animation: blink 1.5s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}

@@ -1,60 +1,57 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
-// import './CompanyPage.css'
+import './CompanyPage.css';
 
 function CompanyPage() {
     const navigate = useNavigate();
-
     const [companies, setCompanies] = useState([]);
-    
+    const [isLoading, setIsLoading] = useState(true); // Added for loading state
+
     useEffect(() => {
-        // Define an async function inside the effect
         const fetchCompanies = async () => {
             try {
-              const response = await fetch(`http://localhost:8000/api/companies`, {
-                method: 'GET',
-              });
-              // console.log(response);
-              if (response.ok) {
-                const data = await response.json();
-                console.log(data)
-                setCompanies(data);
-              } else {
-                console.error('Failed to fetch companies');
-              }
-          } catch (error) {
-            console.error('Error:', error);
-          }
+                const response = await fetch(`http://localhost:8000/api/companies`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setCompanies(data);
+                } else {
+                    console.error('Failed to fetch companies');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            } finally {
+                setIsLoading(false); // Stop loading after fetch is done
+            }
         };
 
         fetchCompanies();
     }, []);
-    
-    // Takes the user to the start page
+
     function cardClick(companyClicked) {
-      console.log(companyClicked)
-      // navigate('/start');
+        // Pass the entire company object for more flexibility on the next page
+        navigate('/start', { state: { company: companyClicked } });
     }
 
-    // function cardClick() {
-    //     console.log("Hello World!")
-    // }
+    if (isLoading) {
+        return <div className="loading-screen">LOADING...</div>;
+    }
 
     return (
-      <div className="companies-container">
-        {companies.map((company, idx) => {
-          return (
-            <div className="company"
-                key={idx}
-                onClick={() => cardClick(company.name)}
-            >
-              {company.name}
+        <div className="companies-container">
+            <h1 className="page-title">{'> SELECT COMPANY'}</h1>
+            <div className="company-grid">
+                {companies.map((company) => (
+                    <div 
+                        className="company-card"
+                        key={company.id} // Use the unique ID from your data
+                        onClick={() => cardClick(company.name)}
+                    >
+                        {company.name}
+                    </div>
+                ))}
             </div>
-            );
-          }
-        )}
-      </div>
-    )
+        </div>
+    );
 }
 
 export default CompanyPage;
