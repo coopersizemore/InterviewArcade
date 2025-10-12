@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# API Keys
+../python-backend/.envpython-backend/.env
+*.env

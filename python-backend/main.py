@@ -1,11 +1,23 @@
 ### Backend Code (Python + FastAPI)
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from models import InterviewQuestion, FeedbackRequest, FeedbackResponse
-import services
-import json
 
-app = FastAPI()
+# OpenAPI/Docs metadata
+tags_metadata = [
+    {"name": "questions", "description": "Browse and retrieve interview questions."},
+    {"name": "companies", "description": "List companies and filter questions by company."},
+    {"name": "feedback", "description": "Submit interview attempts and get AI-generated feedback."},
+]
+
+# Run with: uvicorn main:app --reload
+app = FastAPI(
+    title="Mockly.ai Backend",
+    version="0.1.0",
+    description="FastAPI backend for interview questions and AI feedback.",
+    openapi_tags=tags_metadata,
+    docs_url="/docs",
+    redoc_url="/redoc",
+)
 
 # Configure CORS to allow the React frontend to communicate with this backend
 origins = [
@@ -20,64 +32,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- Data Loading ---
-def load_questions_from_db():
-    """Loads interview questions from a JSON file."""
-    try:
-        with open('questions.json', 'r') as f:
-            return json.load(f)
-    except FileNotFoundError:
-        return []
+# --- Include Routers ---
+from routes.questions import router as questions_router
+from routes.feedback import router as feedback_router
+from routes.companies import router as companies_router
 
-QUESTIONS_DB = load_questions_from_db()
+@app.get("/live", tags=["health"])
+async def live_check():
+    return {"status": "alive"}
 
-# --- API Endpoints ---
+@app.get("/ready", tags=["health"])
+async def readiness_check():
+    return {"status": "ready"}
 
-@app.get("/api/questions", response_model=list[InterviewQuestion])
-async def get_questions():
-    """Endpoint to fetch all interview questions."""
-    return QUESTIONS_DB
-
-@app.get("/api/questions/{question_id}", response_model=InterviewQuestion)
-async def get_question_by_id(question_id: int):
-    """Endpoint to fetch a single question by its ID."""
-    question = next((q for q in QUESTIONS_DB if q["id"] == question_id), None)
-    if not question:
-        raise HTTPException(status_code=404, detail="Question not found")
-    return question
-
-@app.post("/api/feedback", response_model=FeedbackResponse)
-async def get_interview_feedback(request: FeedbackRequest):
-    """
-    Main endpoint to process the user's interview attempt.
-    This will transcribe audio, evaluate code, and generate feedback.
-    """
-    print(f"Received feedback request for question ID: {request.question_id}")
-
-    # 1. Transcribe the user's spoken audio (placeholder)
-    transcript = await services.transcribe_audio_with_whisper(request.audio_data)
-
-    # 2. Evaluate the user's code using an LLM
-    code_evaluation = await services.evaluate_code_with_llm(request.user_code)
-
-    # 3. Get the solution for comparison
-    question = await get_question_by_id(request.question_id)
-    solution = question.solution if question else "No solution found."
-
-    # 4. Generate comprehensive feedback based on all inputs
-    final_feedback = await services.generate_final_feedback(
-        transcript=transcript,
-        user_code=request.user_code,
-        code_evaluation=code_evaluation,
-        solution_code=solution
-    )
-
-    # 5. Convert the feedback text to speech (placeholder)
-    feedback_audio_url = await services.convert_text_to_speech_elevenlabs(final_feedback["report_text"])
-
-    return FeedbackResponse(
-        scores=final_feedback["scores"],
-        report_text=final_feedback["report_text"],
-        suggestions=final_feedback["suggestions"],
-        feedback_audio_url=feedback_audio_url
-    )
+app.include_router(questions_router)
+app.include_router(feedback_router)
+app.include_router(companies_router)

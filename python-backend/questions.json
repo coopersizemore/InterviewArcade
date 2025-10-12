@@ -1,0 +1,55 @@
+[
+  {
+    "id": 0,
+    "title": "Two Sum",
+    "difficulty": "Easy",
+    "companies": ["Google", "Microsoft"],
+    "categories": ["Arrays", "Two Pointer"],
+    "description": "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+    "examples": [
+      {
+        "input": "nums = [2,7,11,15], target = 9",
+        "output": "[0,1]",
+        "explanation": "Because nums[0] + nums[1] == 9, we return [0, 1]."
+      }
+    ],
+    "constraints": [
+      "2 <= nums.length <= 10^4",
+      "-10^9 <= nums[i] <= 10^9",
+      "-10^9 <= target <= 10^9",
+      "Only one valid answer exists."
+    ],
+    "starterCode": {
+      "python": "def twoSum(nums, target):\n    # Write your code here\n    pass"
+    },
+    "hints": [
+      "Try using a hash map to store visited numbers.",
+      "Can you solve it in one pass?"
+    ]
+  },
+  {
+    "id": 1,
+    "title": "Reverse Linked List",
+    "difficulty": "Medium",
+    "companies": ["Google", "Microsoft"],
+    "categories": ["Linked List", "Two Pointer"],
+    "description": "Given the head of a singly linked list, reverse the list, and return the reversed list.",
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5]",
+        "output": "[5,4,3,2,1]"
+      }
+    ],
+    "constraints": [
+      "The number of nodes in the list is in the range [0, 5000].",
+      "-5000 <= Node.val <= 5000"
+    ],
+    "starterCode": {
+      "python": "def reverseList(head):\n    # Write your code here\n    pass"
+    },
+    "hints": [
+      "Iterate through the list and reverse pointers one by one.",
+      "Can you do it recursively?"
+    ]
+  }
+]
