@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 // import {CSidebar, CSidebarHeader, CSidebarBrand} from '@coreui/react'
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import Editor from '@monaco-editor/react';
+// import Editor from '@monaco-editor/react';
 import CodeEditor from './CodeEditor.jsx'
 import Alert from 'react-bootstrap/Alert';
 
@@ -67,9 +67,7 @@ const InterviewPage = () => {
         </Sidebar>
         <CodeEditor 
             value={codeValue} 
-            onChange={
-                (codeValue) => setValue(codeValue)
-            }
+            onChange={(newValue) => setCodeValue(newValue)} 
         ></CodeEditor>
         <button 
             style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px', justifyContent: 'center'}}
