@@ -29,12 +29,13 @@ const InterviewPage = () => {
     }
 
     const onChunk = useCallback(async (blob) => {
+        console.log("CHUNKIN")
         
         const payload = {
             filename: 'audio_file',
 
             // ENCODE from binary to base64
-            data: blob.toString('base64')
+            data: await blobToBase64(blob),
         }
         try{
             const response = await fetch(`${BASE_URL}/api/audio`,{
@@ -46,6 +47,7 @@ const InterviewPage = () => {
             }
             )
         } catch (err){
+            console.log("Bad things have happened")
             setError(err.message)
         }
 
