@@ -49,7 +49,7 @@ def build_code_prompt(question: str, code: str) -> str:
     {question}
 
     Candidate code answer:
-    {code}
+    {code} 
 
     Return a JSON object for the CODE review with the following keys:
     {{
@@ -78,13 +78,14 @@ def build_overall_prompt(question: str, code: str) -> str:
     Candidate code answer:
     {code}
 
-    Your return should follow the following format EXACTLY. In the JSON object, the string value should be
-    a thorough overall assessment of around 30 seconds of spoken feedback. 
-    Discuss the candidate's strengths and areas for improvement in both their coding and their audio.
+    Your response should follow the following format EXACTLY. In the JSON object, the string value should be
+    a thorough overall assessment of around 30 seconds of spoken feedback as if you were talking directly to the interviewee.
+    Use both the code and audio to assess the candidate's planning, implementation, and reflection,
+    focusing on the candidate's strengths and areas for improvement.
 
     Return a JSON object for the OVERALL assessment with the following key:
     {{
-    "overall_assessment": string  // An overall assessment of the candidate's performance on coding and walkthrough
+    "overall_assessment": string
     }}
     """
 
