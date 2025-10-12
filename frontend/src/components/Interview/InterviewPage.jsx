@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import { Sidebar, Menu } from 'react-pro-sidebar';
 import CodeEditor from './CodeEditor.jsx'
-import Alert from 'react-bootstrap/Alert';
 import { BASE_URL } from '../../config.js';
+import BreakoutLoadingScreen from "../Loading/BreakoutLoadingScreen";
 import useAudioRecorder from "../../hooks/useAudioRecorder";
 import './InterviewPage.css'
 
@@ -116,6 +116,12 @@ const InterviewPage = () => {
         stopAudio();
     };
 }, [startAudio, stopAudio]); // The dependency array is now correct and stable
+
+    if (isLoading) {
+        return (
+            <BreakoutLoadingScreen></BreakoutLoadingScreen>
+        )
+    }
 
     return (
        

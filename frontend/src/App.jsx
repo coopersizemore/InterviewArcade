@@ -5,8 +5,6 @@ import CompanyPage from "./components/CompanyPage/CompanyPage";
 import StartPage from './components/Start/StartPage'
 import InterviewPage from './components/Interview/InterviewPage'
 import FeedbackPage from './components/Feedback/FeedbackPage'
-import BreakoutLoadingScreen from "./components/Loading/BreakoutLoadingScreen";
-
 
 function App() {
   return (
@@ -15,7 +13,6 @@ function App() {
       <Route path="/start" element={<StartPage />} />
       <Route path="/companies" element={<CompanyPage />} />
       <Route path="/interview" element={<InterviewPage />} />
-      <Route path="/loading" element={<BreakoutLoadingScreen />} />
       <Route path="/feedback" element={<FeedbackPage />} />
     </Routes>
   );
