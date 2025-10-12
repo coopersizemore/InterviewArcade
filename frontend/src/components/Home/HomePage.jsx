@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import gsap from 'gsap';
+import GlowingCard from './GlowingCard';
 import './HomePage.css'
 
 class RadioButtonEffect {
@@ -212,7 +213,7 @@ function HomePage() {
             </div>
 
             <div className="confirm-button-container">
-                <button onClick={handleConfirmClick} className="confirm-button">Confirm</button>
+                <GlowingCard onClick={handleConfirmClick}/>
             </div>
         </div>
     )

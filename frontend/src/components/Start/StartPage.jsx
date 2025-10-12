@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import GlowingCard from './GlowingCard';
+import PacManButton from './PacManButton';
 import './StartPage.css'
 
 function StartPage() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // isLoading now starts as 'false'. It will be true only AFTER the user clicks.
-    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
     // The fetch logic is now inside the click handler
-    const cardClick = async () => {
-        setIsLoading(true); // Show the loading screen
+    const handleStartClick = async () => {
         setError(null); // Clear any previous errors
 
         // Read the instructions (company name or random flag) from the previous page
@@ -28,7 +25,6 @@ function StartPage() {
         } else {
             // This is a fallback in case the page is reached without proper state
             setError('No interview type specified. Please go back and select an option.');
-            setIsLoading(false);
             return;
         }
 
@@ -42,24 +38,21 @@ function StartPage() {
             if (questionToPass) {
                 console.log("Navigating to interview with question:", questionToPass);
                 // On success, navigate to the interview page with the question
-                navigate('/interview', { state: { question: questionToPass } });
+                // navigate('/interview', { state: { question: questionToPass } });
+                // After a 5-second delay, navigate to the interview page.
+                setTimeout(() => {
+                    navigate('/interview', { state: { question: questionToPass } });
+                }, 5000); // 5-second delay
             } else {
                 throw new Error('No questions found for the selected criteria.');
             }
         } catch (err) {
-            // If anything fails, stop loading and show the error message
+            // If anything fails, show the error message
             setError(err.message);
-            setIsLoading(false);
         }
     };
 
     // --- UI RENDERING ---
-
-    if (isLoading) {
-        // This screen is shown only after the card is clicked
-        return <div>LOADING INTERVIEW...</div>;
-    }
-
     if (error) {
         // Show a helpful error message and a way to go back
         return (
@@ -79,7 +72,7 @@ function StartPage() {
                 <li>5 Minutes</li>
                 <li>Happy Practicing!</li>
             </ul>
-            <GlowingCard onClick={cardClick}/>
+            <PacManButton onClick={handleStartClick} />
         </div>
     )
 }
