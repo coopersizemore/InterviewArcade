@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, {useCallback, useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 // import {CSidebar, CSidebarHeader, CSidebarBrand} from '@coreui/react'
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 // import Editor from '@monaco-editor/react';
 import CodeEditor from './CodeEditor.jsx'
 import Alert from 'react-bootstrap/Alert';
-
+import { BASE_URL } from '../../config.js';
+import useAudioRecorder from "../../hooks/useAudioRecorder";
 
 
 const InterviewPage = () => {
@@ -16,10 +17,18 @@ const InterviewPage = () => {
     const[error, setError] = useState('')
     const[data, setData] = useState('')
 
+
+    const onChunk = useCallback(async (blob) => {
+        // As per existing code, this may need to be a POST request to the backend...
+        console.log("New audio chunk:", blob);
+      }, []);
+
+    const {startAudio, stopAudio} = useAudioRecorder(onChunk);
+
     // const[problemInfo, setProblemInfo] = useState('')
     const endInterview = () => {
         // stop recording
-
+        stopAudio()
         // do POST request with code solution
 
         // while waiting for reponse, navigate to loading screen
@@ -38,14 +47,13 @@ const InterviewPage = () => {
     // for starters, does not need to actually detect voice, maybe it is a constant animation
     // audio streamer needs to be used 
     
-    // TODO: add useEffect for starting recording the first time screen is loaded
-    const [startFirstRecording, setStartFirstRecording] = useState(true);
+    // const [startFirstRecording, setStartFirstRecording] = useState(true);
 
     useEffect(() => {
         // call get route for getting question via question ID here
         const fetchProblemInfo = async () => {
             try{
-                const response = await fetch('/api/questions/id/${questionId}')
+                const response = await fetch(`${BASE_URL}/api/questions/id/${questionId}`)
                 const result = await response.json()
                 setData(result)
             } catch (err) {
@@ -55,14 +63,12 @@ const InterviewPage = () => {
             setError('')
         }
 
-        fetchProblemInfo()
-
         // GET INFO ON PROBLEM
-
+        fetchProblemInfo()
         // Notify user recording has started
-
+        setRecordingAlert(true)
         // Start recording
-       
+        startAudio()
 
     }, []);
 
@@ -70,8 +76,8 @@ const InterviewPage = () => {
        
         <div>
             {/* The below alert does not work yet */}
-        {/* {recordingAlert && <Alert variant='info' dismissible onClose={setRecordingAlert(false)}> Audio recording has started! </Alert>} */}
 
+        {recordingAlert && <Alert variant='info' dismissible onClose={setRecordingAlert(false)}> Audio recording has started! </Alert>}        
         {error && <Alert variant='danger'> Something went wrong! Please refresh! </Alert>}
         <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
             <Menu>
