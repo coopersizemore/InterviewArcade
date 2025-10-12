@@ -41,7 +41,8 @@ function FeedbackPage() {
             ],
             "improvements_description": "Try to be mindful of filler words like 'um' and 'like', as they can sometimes be distracting. When solving the problem, it would be beneficial to explain your thought process in more detail. Varying your vocal pitch could also make your explanation more engaging for the listener."
         },
-        "transcript": "Okay, so for this problem, I think the first step is to, um, get the data from the API. I'll use the fetch function for that since it's built-in. So I'll write an async function... yeah, that seems right. I'll need to, like, handle the response and parse it as JSON. After I have the data, I can map over the array to create the list items. For each item in the data array, I will return a div with the user's name. This should render the list on the screen."
+        "transcript": "Test"
+        //"transcript": "Okay, so for this problem, I think the first step is to, um, get the data from the API"
     }
 
     // function cardClick() {
@@ -50,55 +51,45 @@ function FeedbackPage() {
 
     // State to manage the audio loading process
     const [isAudioLoading, setIsAudioLoading] = useState(true);
-    const [audioUrl, setAudioUrl] = useState(null);
+    const [audioData, setAudioData] = useState(null);
 
     useEffect(() => {
-        // Simulate fetching the audio file after the component mounts
-        const fetchAudio = () => {
-            console.log("Fetching AI voiceover...");
-            setTimeout(() => {
-                // Once the "request" is done, set the URL and stop loading
-                // Replace with a real audio file URL when you have one
-                const temporaryAudioFile = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
-                setAudioUrl(temporaryAudioFile);
-                setIsAudioLoading(false);
-                console.log("Audio loaded!");
-            }, 3000); // Simulate a 3-second delay
-        };
+        // Fetches the text-to-speech data from the elevenlabs endpoint
+        const fetchAudio = async () => {
+            if (!feedbackData?.transcript) {
+                console.log("Transcript Empty");
+                return;
+            }
 
-        // const fetchAudio = async () => {
-        //     console.log("Fetching AI voiceover...");
-        //     setIsAudioLoading(true); // Ensure loading is true at the start
+            console.log("Hitting the eleven labs endpoint to get text-to-speech");
+            setAudioData(null);
+            setIsAudioLoading(true);
 
-        //     try {
-        //         // The actual GET request to your backend endpoint
-        //         const response = await fetch('/feedback/transcript');
+            try {
+                const response = await fetch('http://localhost:8000/api/feedback/tts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        transcript: feedbackData.transcript
+                    })
+                });
 
-        //         // It's crucial to check if the request was successful
-        //         if (!response.ok) {
-        //             throw new Error(`HTTP error! Status: ${response.status}`);
-        //         }
-
-        //         const data = await response.json(); // { "audio_filepath": "/path/to/audio.mp3" }
-
-        //         // --- This is the important part ---
-        //         // Prepend your backend's URL to the relative path
-        //         // In development, this might be 'http://localhost:5000'
-        //         // In production, it would be 'https://yourapi.com'
-        //         const backendUrl = process.env.REACT_APP_BACKEND_URL || ''; 
-        //         const fullAudioUrl = `${backendUrl}${data.audio_filepath}`;
+                console.log(`Response Status: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error: Status ${response.status}`);
+                }
                 
-        //         console.log("Audio loaded from:", fullAudioUrl);
-        //         setAudioUrl(fullAudioUrl);
+                let data = await response.blob();
+                setAudioData(data);
 
-        //     } catch (error) {
-        //         console.error("Failed to fetch audio:", error);
-        //         // You could set an error state here to show a message to the user
-        //     } finally {
-        //         // This block runs whether the fetch succeeded or failed
-        //         setIsAudioLoading(false);
-        //     }
-        // };
+            } catch (error) {
+                console.log("Error with text-to-speech");
+            } finally {
+                setIsAudioLoading(false);
+            }
+        }
 
         fetchAudio();
     }, []); // Empty array ensures this runs only once
@@ -117,7 +108,7 @@ function FeedbackPage() {
             <div className="right-pane">
                 <div className="recording">
                     <h3>AI Voiceover</h3>
-                    <AudioPlayer src={audioUrl} isLoading={isAudioLoading} />
+                    <AudioPlayer audioData={audioData} isLoading={isAudioLoading} />
                 </div>
                 <div className="transcript">
                     <h3>Transcript</h3>

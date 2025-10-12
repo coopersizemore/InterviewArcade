@@ -1,7 +1,9 @@
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import Response
 from models import FeedbackRequest, FeedbackResponse, Review, AudioBlob, TTSRequest, TTSResponse
 from pathlib import Path
 import asyncio
+import base64
 
 from services import gemini_service
 from services.elevenlabs_service import textToSpeech
@@ -85,15 +87,25 @@ async def get_interview_feedback(request: FeedbackRequest):
         overall_assessment=overall_assessment,
     )
 
-
-@router.post("/tts", response_model=TTSResponse)
+"""
+@router.post("/tts", response_model=AudioBlob)
 async def transcript_to_audio(request: TTSRequest):
-    """
-    Converts a transcript string into an audio file using ElevenLabs.
-    Returns the generated audio file as binary data.
-    """
     try:
-        audio_bytes = await textToSpeech(request.transcript)
-        return AudioBlob(content=audio_bytes, media_type="audio/wav")
+        # call sync function without await
+        audio_bytes = textToSpeech(request.transcript)
+
+        # encode as base64 so it is safe to include in JSON
+        # b64 = base64.b64encode(audio_bytes).decode("ascii")
+        return AudioBlob(data=audio_bytes, data_type="audio/mpeg")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+"""
+
+@router.post("/tts")
+async def transcript_to_audio(request: TTSRequest):
+    try:
+        # run blocking textToSpeech in a thread (doesn't block event loop)
+        audio_bytes = await asyncio.to_thread(textToSpeech, request.transcript)
+        return Response(content=audio_bytes, media_type="audio/mpeg")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

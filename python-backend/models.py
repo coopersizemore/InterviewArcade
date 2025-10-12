@@ -72,5 +72,5 @@ class AudioBlob(BaseModel):
     """
     Stores an audio blob from the user's microphone
     """
-    filename: str
     data: str  # base64-encoded audio chunk from frontend
+    data_type: str  # either audio/wav or audio/mpeg

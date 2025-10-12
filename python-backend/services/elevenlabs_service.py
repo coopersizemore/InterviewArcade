@@ -18,7 +18,6 @@ def textToSpeech(text: str):
         model_id="eleven_turbo_v2_5",
         output_format="mp3_44100_128"
     )
-    print(type(audio))
     audio_bytes = b"".join(audio)
     return audio_bytes
 
