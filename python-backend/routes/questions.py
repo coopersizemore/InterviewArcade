@@ -24,7 +24,7 @@ async def get_question_by_id(question_id: int):
 
 @router.get("/companyName/{company_name}", response_model=InterviewQuestion)
 async def get_question_by_company_name(company_name: str):
-    """Endpoint for getting all the questions for a specific company"""
+    """Endpoint for getting a random question from a specific company"""
     questions = [q for q in QUESTIONS if company_name in q.get("companies", [])]
     return random.choice(questions)
 
