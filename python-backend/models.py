@@ -75,3 +75,10 @@ class AudioBlob(BaseModel):
     """
     filename: str
     data: str  # base64-encoded audio chunk from frontend
+
+
+class AudioResponse(BaseModel):
+    """
+    Stores the audio response from Elevenlabs
+    """
+    content: str

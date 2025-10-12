@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
-from models import FeedbackRequest, FeedbackResponse, Review
+from models import FeedbackRequest, FeedbackResponse, Review, AudioResponse
 from pathlib import Path
 
-from services import gemini_service
+from services import gemini_service, elevenlabs_service
 
 router = APIRouter(prefix="/api/feedback")
 
@@ -61,3 +61,15 @@ async def get_interview_feedback(request: FeedbackRequest):
         audio_review=audio_review,
         overall_assessment=overall_assessment
     )
+
+@router.post("/tts")
+async def transcript_to_audio(transcript: str):
+    """
+    Converts a transcript string into an audio file using ElevenLabs.
+    Returns the generated audio file as binary data.
+    """
+    try:
+        audio_bytes, mime_type = await elevenlabs_service.text_to_speech(transcript)
+        return AudioResponse(content=audio_bytes, media_type="audio/wav")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
