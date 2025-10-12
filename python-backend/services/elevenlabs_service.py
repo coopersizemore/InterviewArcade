@@ -20,8 +20,5 @@ def textToSpeech(text: str):
     )
     print(type(audio))
     audio_bytes = b"".join(audio)
-    with open("output.mp3", "wb") as f:
-        f.write(audio_bytes)
-
-textToSpeech("Hello, welcome to Interview Arcade! We are excited to have you here.")
+    return audio_bytes
 
