@@ -169,7 +169,7 @@ const InterviewPage = () => {
   
             <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
                 <Menu style={{ padding: "0 30px" }}>                
-                    <div className='problem-title' style={{ "font-size": '30px', "font-weight": 'bold', }}>
+                    <div className='problem-title' style={{ "fontSize": '30px', "fontWeight": 'bold', }}>
                         {question?.title}
                     </div>
                     <div className="problem-description">
@@ -180,7 +180,7 @@ const InterviewPage = () => {
 
                     {
                         question?.examples?.length > 0 && (
-                            <h2 style={{ "text-align": 'left'}}>Examples</h2>
+                            <h2 style={{ "textAlign": 'left'}}>Examples</h2>
                         )
                     }
                     {question?.examples?.map((example, index) => (
@@ -196,7 +196,7 @@ const InterviewPage = () => {
 
                     {
                         question?.constraints?.length > 0 && (
-                            <h2 style={{ "text-align": 'left'}} >Constraints</h2>
+                            <h2 style={{ "textAlign": 'left'}} >Constraints</h2>
                         )
                     }
 
@@ -226,7 +226,7 @@ const InterviewPage = () => {
                                 </button>
                                 {showHints && (
                                     <div>
-                                        <h2 style={{ "text-align": 'left'}} >Hints</h2>
+                                        <h2 style={{ "textAlign": 'left'}} >Hints</h2>
                                         {question.hints.map((hint, index) => (
                                             <div key={index}>
                                                 {hint}
