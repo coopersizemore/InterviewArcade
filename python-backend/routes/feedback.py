@@ -1,9 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import Response
-from models import FeedbackRequest, FeedbackResponse, Review, AudioBlob, TTSRequest, TTSResponse
-from pathlib import Path
+from models import FeedbackRequest, FeedbackResponse, Review, TTSRequest
 import asyncio
-import base64
 
 from services import gemini_service
 from services.elevenlabs_service import textToSpeech

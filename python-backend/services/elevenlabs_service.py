@@ -2,7 +2,6 @@ from elevenlabs.client import ElevenLabs
 from elevenlabs.play import play
 from dotenv import load_dotenv
 import os
-from typing import Dict, Any
 load_dotenv()
 
 api_key = os.getenv("ELEVENLABS_API_KEY")

@@ -2,8 +2,6 @@ from fastapi import APIRouter, HTTPException
 from models import AudioBlob
 from pathlib import Path
 import base64
-import wave
-import io
 
 router = APIRouter(prefix="/api/audio", tags=["audio"])
 

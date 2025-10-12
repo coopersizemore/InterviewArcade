@@ -94,7 +94,6 @@ async def analyze_interview(
     code: str,
     model: str = "gemini-2.0-flash",
     focus: str = "overall",
-    output_path: str = "gemini_response.json"
 ) -> Dict[str, Any]:
     """
     Analyze an interview using Gemini.
