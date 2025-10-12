@@ -53,10 +53,10 @@ const InterviewPage = () => {
         //     <CSidebarBrand>Problem Description</CSidebarBrand>
         //     </CSidebarHeader>
         // </CSidebar>
-        <div style={{display: "flex", height: '100vh'}} >
+        <div>
             {/* The below alert does not work yet */}
         {/* {recordingAlert && <Alert variant='info' dismissible onClose={setRecordingAlert(false)}> Audio recording has started! </Alert>} */}
-        <Sidebar style={{ width: '35vw', height: '100vh' }}>
+        <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
             <Menu>
                 <MenuItem> Problem Title </MenuItem>
                 <MenuItem> Problem Description </MenuItem>
@@ -65,12 +65,14 @@ const InterviewPage = () => {
                 <MenuItem> Sample Output & Output 2</MenuItem>
             </Menu>
         </Sidebar>
-        <CodeEditor 
+        <div style={{display: "inline-block", width: '64.96vw', height: '100vh'}}>
+            <CodeEditor style={{display: "inline", width: '64.96vw', height: '100vh'}}>
             value={codeValue} 
-            onChange={(newValue) => setCodeValue(newValue)} 
-        ></CodeEditor>
+            onClick={() => setCodeValue(newValue)}
+            </CodeEditor>
+        </div>
         <button 
-            style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px', justifyContent: 'center'}}
+            style={{width: '20vw', height: '10vh', position:"fixed", bottom: '20px', right: '20px', justifyContent: 'center', zIndex: 10}}
             onClick={endInterview}> 
             End Interview! 
         </button>
