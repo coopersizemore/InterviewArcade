@@ -55,7 +55,7 @@ const InterviewPage = () => {
         console.log("New audio chunk:", blob);
       }, []);
 
-    const {startAudio, stopAudio} = useAudioRecorder(onChunk);
+    const { startAudio, stopAudio, isRecording } = useAudioRecorder(onChunk);
 
     const endInterview = async () => {
         // stop recording
@@ -95,17 +95,32 @@ const InterviewPage = () => {
 
     }        
 
-    // useEffect(() => {
-
-    // }, [isLoading])
 
     useEffect(() => {
-        // Notify user recording has started
-        setRecordingAlert(true)
-        // Start recording
-        startAudio()
+        // 1. We create an async function to handle the setup
+        const initializeRecording = async () => {
+            try {
+                // This now waits for the user to grant permission
+                // and for the recording to actually begin.
+                await startAudio();
+                
+                // 2. Show the alert only AFTER recording has successfully started.
+                setRecordingAlert(true);
+            } catch (error) {
+                console.error("Could not start recording:", error);
+                // Optionally set an error state here
+            }
+        };
 
-    }, []);
+        initializeRecording();
+
+        // 3. Return a cleanup function.
+        // This function runs automatically when the component unmounts.
+        return () => {
+            console.log("Component unmounting, stopping audio.");
+            stopAudio();
+        };
+    }, [startAudio, stopAudio]); // 4. Add the hook's functions to the dependency array
 
     return (
        
@@ -182,4 +197,4 @@ const InterviewPage = () => {
     
 }
 
-export default InterviewPage
+export default InterviewPage;

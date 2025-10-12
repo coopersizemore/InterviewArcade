@@ -12,12 +12,13 @@ export default function useAudioRecorder(onChunk) {
             recorder.ondataavailable = (event) => onChunk(event.data);
         }
         setup();
-    }, [onChunk]);
+    }, []);
 
     function startAudio() {
+        console.log("Starting")
         // 1000 milliseconds is 1 second
         // 60,000 represents 1 minute
-        recorderRef.current?.start(1000);
+        recorderRef.current?.start(20000);
     }
 
     function stopAudio() {
