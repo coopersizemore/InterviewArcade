@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from models import InterviewQuestion
 import services.questions_service as qs
+import random
 
 router = APIRouter(prefix="/api/questions", tags=["questions"])
 
@@ -21,9 +22,9 @@ async def get_question_by_id(question_id: int):
         raise HTTPException(status_code=404, detail=f"Question with id {question_id} doesn't exist")
     return question
 
-@router.get("/companyName/{company_name}", response_model=list[InterviewQuestion])
+@router.get("/companyName/{company_name}", response_model=InterviewQuestion)
 async def get_question_by_company_name(company_name: str):
     """Endpoint for getting all the questions for a specific company"""
     questions = [q for q in QUESTIONS if company_name in q.get("companies", [])]
-    return questions
+    return random.choice(questions)
 

@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import './App.css'
 import HomePage from './components/Home/HomePage'
 import StartPage from './components/Start/StartPage'
-import InterviewPage from './components/InterviewPage'
+import InterviewPage from './components/Interview/InterviewPage'
 import FeedbackPage from './components/Feedback/FeedbackPage'
 import BreakoutLoadingScreen from "./components/Loading/BreakoutLoadingScreen";
 
