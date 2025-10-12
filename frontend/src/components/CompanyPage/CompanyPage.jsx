@@ -11,7 +11,7 @@ function CompanyPage() {
         // Define an async function inside the effect
         const fetchCompanies = async () => {
             try {
-              const response = await fetch(`/api/companies`, {
+              const response = await fetch(`http://localhost:8000/api/companies`, {
                 method: 'GET',
               });
               // console.log(response);
