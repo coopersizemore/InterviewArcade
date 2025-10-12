@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 // import {CSidebar, CSidebarHeader, CSidebarBrand} from '@coreui/react'
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 // import Editor from '@monaco-editor/react';
@@ -9,14 +9,23 @@ import Alert from 'react-bootstrap/Alert';
 
 
 const InterviewPage = () => {
+    const location = useLocation();
+    const { questionId } = location.state || {};
     const [codeValue, setCodeValue] = useState('')
     const[recordingAlert, setRecordingAlert] = useState(false)
+    const[error, setError] = useState('')
+    const[data, setData] = useState('')
 
+    // const[problemInfo, setProblemInfo] = useState('')
     const endInterview = () => {
         // stop recording
+
         // do POST request with code solution
+
         // while waiting for reponse, navigate to loading screen
+
         // when done, pass in the response into feedback page
+
     }
     
     // things needed from previous screen - company name
@@ -34,32 +43,40 @@ const InterviewPage = () => {
 
     useEffect(() => {
         // call get route for getting question via question ID here
-        if (true){
-            // Make user aware that recording has started (alert?) - dismissable (for now)
-            // Would like to fade alert on its own, but too much work for now
-            setRecordingAlert(true)
-            // START AUDIO RECORDING - and perform post request every 60 seconds of recording
-
-            // need to handle stopping audio recording outside of this somehow, with
-            // the End Interview OnClick event
-            console.log("This function is being called!")
+        const fetchProblemInfo = async () => {
+            try{
+                const response = await fetch('/api/questions/id/${questionId}')
+                const result = await response.json()
+                setData(result)
+            } catch (err) {
+                setError(err.message)                
+            }
+            
+            setError('')
         }
+
+        fetchProblemInfo()
+
+        // GET INFO ON PROBLEM
+
+        // Notify user recording has started
+
+        // Start recording
+       
 
     }, []);
 
     return (
-        // <CSidebar className='border-end'>
-        //     <CSidebarHeader className="border-bottom">
-        //     <CSidebarBrand>Problem Description</CSidebarBrand>
-        //     </CSidebarHeader>
-        // </CSidebar>
+       
         <div>
             {/* The below alert does not work yet */}
         {/* {recordingAlert && <Alert variant='info' dismissible onClose={setRecordingAlert(false)}> Audio recording has started! </Alert>} */}
+
+        {error && <Alert variant='danger'> Something went wrong! Please refresh! </Alert>}
         <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
             <Menu>
-                <MenuItem> Problem Title </MenuItem>
-                <MenuItem> Problem Description </MenuItem>
+                <MenuItem> {data?.title} </MenuItem>
+                <MenuItem> {data?.description} </MenuItem>
                 {/* 2 columns - one with sample input, and another with sample output */}
                 <MenuItem> Sample Input & Output 1</MenuItem>
                 <MenuItem> Sample Output & Output 2</MenuItem>
@@ -81,13 +98,5 @@ const InterviewPage = () => {
     
     
 }
-
-
-
-// Maybe reusable for FeedbackPage
-// sample 2 column layout component
-// for each column
-// have title
-// have content area
 
 export default InterviewPage
