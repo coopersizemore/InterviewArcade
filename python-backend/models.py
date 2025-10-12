@@ -34,7 +34,7 @@ class Review(BaseModel):
     strengths_list: Optional[List[str]] = []  # Concise list of strengths
     strengths_description: Optional[str] = ""  # Description of strengths
     improvements_list: Optional[List[str]] = []  # Concise list of improvements
-    improvement_description: Optional[str] = ""  # Description of improvements
+    improvements_description: Optional[str] = ""  # Description of improvements
 
 
 class FeedbackResponse(BaseModel):
