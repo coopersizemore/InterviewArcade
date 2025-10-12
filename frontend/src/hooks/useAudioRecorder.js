@@ -14,8 +14,9 @@ export default function useAudioRecorder(onChunk) {
     }, [onChunk]);
 
     function startAudio() {
-        // 15000 milliseconds is 15 seconds
-        recorderRef.current?.start(15000);
+        // 1000 milliseconds is 1 second
+        // 60,000 represents 1 minute
+        recorderRef.current?.start(60000);
     }
 
     function stopAudio() {

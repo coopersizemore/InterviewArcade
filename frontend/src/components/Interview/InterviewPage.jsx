@@ -20,6 +20,24 @@ const InterviewPage = () => {
 
     const onChunk = useCallback(async (blob) => {
         // As per existing code, this may need to be a POST request to the backend...
+        const payload = {
+            filename: 'audio_file',
+            data: blob
+        }
+        try{
+            const response = await fetch(`${BASE_URL}/api/audio`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)                
+            }
+            )
+        } catch (err){
+            setError(err.message)
+        }
+
+        setError("")
         console.log("New audio chunk:", blob);
       }, []);
 
@@ -30,6 +48,7 @@ const InterviewPage = () => {
         // stop recording
         stopAudio()
         // do POST request with code solution
+        
 
         // while waiting for reponse, navigate to loading screen
 
