@@ -22,7 +22,7 @@ async def get_interview_feedback(request: FeedbackRequest):
     - overall assessment (focus='overall')
     """
 
-    audio_path = "data/recording.wav"
+    audio_path = "data/recording.webm"
     if not audio_path:
         raise HTTPException(
             status_code=400, detail=f"audio_filepath not found: {audio_path}"
