@@ -26,10 +26,8 @@ const InterviewPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { question } = location.state || {};
-    const [codeValue, setCodeValue] = useState('')
-    const[recordingAlert, setRecordingAlert] = useState(false)
-    const[error, setError] = useState('')
-    const[data, setData] = useState('')
+    const [codeValue, setCodeValue] = useState('')    
+    const[error, setError] = useState('')    
     const[isLoading, setIsLoading] = useState(false)
 
     const onChunk = useCallback(async (blob) => {
@@ -104,8 +102,7 @@ const InterviewPage = () => {
     useEffect(() => {
     const initializeRecording = async () => {
         try {
-            await startAudio();
-            setRecordingAlert(true);
+            await startAudio();            
         } catch (error) {
             // Handle the case where the user denies microphone permission
             setError("Microphone access was denied. Please refresh and grant permission.");
@@ -124,13 +121,13 @@ const InterviewPage = () => {
        
         <div style={{display: "flex", height: '100vh'}}>
             {/* The below alert does not work yet */}
-
-        {recordingAlert && <Alert variant='info' dismissible onClose={() => setRecordingAlert(false)}> Audio recording has started! </Alert>}        
-        {error && <Alert variant='danger'> Something went wrong! Please refresh! </Alert>}
+  
         <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
-            <Menu>
-                <MenuItem className='code'> {question?.title} </MenuItem>
-                <MenuItem> {question?.description} </MenuItem>
+            <Menu style={{ padding: "0 30px" }}>                
+                <MenuItem className='code' style={{ "font-size": '20px' }}> {question?.title} </MenuItem>
+                <div className="problem-description">
+                    {question?.description}
+                </div>
                 {/* 2 columns - one with sample input, and another with sample output */}
                 {/* For each example, populate thingy */}
 

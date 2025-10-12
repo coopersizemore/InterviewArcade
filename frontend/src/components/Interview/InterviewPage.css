@@ -3,3 +3,7 @@
 .code {
     font-size: clamp(2rem, 5vw, 4rem);
 }
+
+.problem-description {
+    padding: 20px 0;
+}
