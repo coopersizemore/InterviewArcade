@@ -198,3 +198,26 @@
   background-color: var(--neon-magenta);
   box-shadow: 0 0 5px var(--neon-magenta);
 }
+
+/* Sprites */
+/* Keep this style for the score badge container */
+.score-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the score and the icon */
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background-color: #1a1a1a;
+    color: #4dff4d;
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 2px solid #4dff4d;
+    display: inline-flex;
+}
+
+/* Style the single icon */
+.invader-icon {
+    font-size: 1.5rem; /* Make the icon a bit bigger */
+    line-height: 1;  /* Helps with vertical alignment */
+}

@@ -6,7 +6,10 @@ function FeedbackColumn({ title, reviewData }) {
   return (
     <div className="feedback-column">
       <h2>{title}</h2>
-      <div className="score-badge">Score: {reviewData.score}</div>
+      <div className="score-badge">
+        Score: {reviewData.score}
+        <span className="invader-icon">👾</span>
+      </div>
 
       <div className="feedback-section">
         <h3>Strengths</h3>

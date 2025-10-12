@@ -12,6 +12,13 @@
     margin-top: 50px;
 }
 
+h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: red
+}
+
 /** Same font for consistency across the page */
 h2 {
     color: red;
