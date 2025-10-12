@@ -29,6 +29,7 @@ const InterviewPage = () => {
     const [codeValue, setCodeValue] = useState('')    
     const[error, setError] = useState('')    
     const[isLoading, setIsLoading] = useState(false)
+    const [showHints, setShowHints] = useState(false);
 
     const INTERVIEW_DURATION = 300;  // The duration of the interview in seconds
 
@@ -153,8 +154,6 @@ const InterviewPage = () => {
         )
     }
 
-    const [showHints, setShowHints] = useState(false);
-
     return (
         <div style={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
             <div className="app-bar">
@@ -169,7 +168,7 @@ const InterviewPage = () => {
   
             <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
                 <Menu style={{ padding: "0 30px" }}>                
-                    <div className='problem-title' style={{ "font-size": '30px', "font-weight": 'bold', }}>
+                    <div className='problem-title' style={{ "fontSize": '30px', "fontWeight": 'bold', }}>
                         {question?.title}
                     </div>
                     <div className="problem-description">
@@ -180,7 +179,7 @@ const InterviewPage = () => {
 
                     {
                         question?.examples?.length > 0 && (
-                            <h2 style={{ "text-align": 'left'}}>Examples</h2>
+                            <h2 style={{ "textAlign": 'left'}}>Examples</h2>
                         )
                     }
                     {question?.examples?.map((example, index) => (
@@ -196,7 +195,7 @@ const InterviewPage = () => {
 
                     {
                         question?.constraints?.length > 0 && (
-                            <h2 style={{ "text-align": 'left'}} >Constraints</h2>
+                            <h2 style={{ "textAlign": 'left'}} >Constraints</h2>
                         )
                     }
 
