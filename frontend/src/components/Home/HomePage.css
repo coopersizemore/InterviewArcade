@@ -6,23 +6,24 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 .confirm-button {
     margin-top: 50px;
 }
 
-h1 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: red
-}
 
 /** Same font for consistency across the page */
-h2 {
+h1 {
+  color: white;
+  font-size: 60px;
+}
+
+h3 {
     color: red;
     text-align: center;
+    font-size: 25px;
 }
 
 h2, button {
