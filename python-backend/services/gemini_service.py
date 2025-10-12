@@ -75,6 +75,10 @@ def build_overall_prompt(question: str, code: str) -> str:
     Candidate code answer:
     {code}
 
+    Your return should follow the following format EXACTLY. In the JSON object, the string value should be
+    a thorough overall assessment of around 30 seconds of spoken feedback. Discuss the candidate's strengths and areas for
+    improvement in both their coding and their audio.
+
     Return a JSON object for the OVERALL assessment with the following key:
     {{
     "overall_assessment": string  // An overall assessment of the candidate's performance on coding and walkthrough
@@ -104,6 +108,8 @@ async def analyze_interview(
         prompt_text = build_code_prompt(question, code)
     else:
         prompt_text = build_overall_prompt(question, code)
+
+    print(prompt_text)
 
     # --- Initialize Gemini client ---
     api_key = os.getenv("GEMINI_API_KEY")

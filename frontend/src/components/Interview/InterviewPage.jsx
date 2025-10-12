@@ -63,6 +63,7 @@ const InterviewPage = () => {
     const endInterview = async () => {
         // stop recording
         stopAudio()
+        setTimeout(() => {}, 5000);
         // do POST request with code solution
         console.log(codeValue)
 
@@ -73,6 +74,7 @@ const InterviewPage = () => {
             setIsLoading(true)
 
             // This needs to happen in loading screen
+            console.log(codeValue)
             const response = await fetch (`http://localhost:8000/api/feedback`, {
                 method: 'POST',
                 headers: {

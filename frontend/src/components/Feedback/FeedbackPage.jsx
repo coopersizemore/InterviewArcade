@@ -56,7 +56,8 @@ function FeedbackPage() {
     useEffect(() => {
         // Fetches the text-to-speech data from the elevenlabs endpoint
         const fetchAudio = async () => {
-            if (!feedbackData?.transcript) {
+            console.log(feedbackData)
+            if (!feedbackData?.overall_assessment) {
                 console.log("Transcript Empty");
                 return;
             }
@@ -72,7 +73,7 @@ function FeedbackPage() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        transcript: feedbackData.transcript
+                        transcript: feedbackData.overall_assessment
                     })
                 });
 
@@ -112,7 +113,7 @@ function FeedbackPage() {
                 </div>
                 <div className="transcript">
                     <h3>Transcript</h3>
-                    <p>{feedbackData.transcript}</p>
+                    <p>{feedbackData.overall_assessment}</p>
                 </div>
             </div>
         </div>

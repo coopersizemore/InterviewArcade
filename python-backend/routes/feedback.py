@@ -79,7 +79,11 @@ async def get_interview_feedback(request: FeedbackRequest):
         improvements_description=audio_result.get("improvements_description") or "",
     )
 
-    overall_assessment = overall_result.get("description") or ""
+    print(overall_result)
+
+    overall_assessment = overall_result.get("overall_assessment") or ""
+
+
 
     return FeedbackResponse(
         code_review=code_review,
