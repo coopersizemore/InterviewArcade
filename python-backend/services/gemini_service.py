@@ -114,7 +114,7 @@ async def analyze_interview(
     # --- Upload audio file ---
     uploaded_audio = client.files.upload(
         file=audio_filepath,
-        config={"mime_type": "audio/wav"}
+        config={"mime_type": "audio/webm"}
     )
 
     # --- Generate model response ---
