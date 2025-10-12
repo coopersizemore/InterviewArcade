@@ -153,6 +153,8 @@ const InterviewPage = () => {
         )
     }
 
+    const [showHints, setShowHints] = useState(false);
+
     return (
         <div style={{display: 'flex', flexDirection: 'column', height: '100vh'}}>
             <div className="app-bar">
@@ -167,7 +169,7 @@ const InterviewPage = () => {
   
             <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
                 <Menu style={{ padding: "0 30px" }}>                
-                    <div className='problem-title' style={{ "font-size": '20px' }}>
+                    <div className='problem-title' style={{ "font-size": '30px', "font-weight": 'bold', }}>
                         {question?.title}
                     </div>
                     <div className="problem-description">
@@ -178,23 +180,23 @@ const InterviewPage = () => {
 
                     {
                         question?.examples?.length > 0 && (
-                            <h2>Examples</h2>
+                            <h2 style={{ "text-align": 'left'}}>Examples</h2>
                         )
                     }
                     {question?.examples?.map((example, index) => (
                         <div key={index}>
                             <div className="row">
-                                <div className="input">{example.input}</div>
-                                <div className="output">{example.output}</div>
+                                <div className="input">Input: {example.input}</div>
+                                <div className="output">Output: {example.output}</div>
                             </div>
-                            <div className="explanation">{example.explanation}</div>
+                            <div className="explanation">Explanation: {example.explanation}</div>
                         </div>
                     ))
                     }
 
                     {
                         question?.constraints?.length > 0 && (
-                            <h2>Constraints</h2>
+                            <h2 style={{ "text-align": 'left'}} >Constraints</h2>
                         )
                     }
 
@@ -207,15 +209,33 @@ const InterviewPage = () => {
 
                     {
                         question?.hints?.length > 0 && (
-                            <h2>Hints</h2>
+                            <div>
+                                <button
+                                    style={{
+                                        marginTop: '24px',
+                                        marginBottom: '0px',
+                                        background: '#ffffffff',
+                                        border: 'none',
+                                        padding: '8px 16px',
+                                        cursor: 'pointer',
+                                        fontWeight: 'bold',
+                                    }}
+                                    onClick={() => setShowHints(h => !h)}
+                                >
+                                    {showHints ? 'Hide Hints' : 'Show Hints'}
+                                </button>
+                                {showHints && (
+                                    <div>
+                                        <h2 style={{ "text-align": 'left'}} >Hints</h2>
+                                        {question.hints.map((hint, index) => (
+                                            <div key={index}>
+                                                {hint}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         )
-                    }
-
-                    {question?.hints?.map((hint, index) => (
-                        <div key={index}>
-                            {hint}
-                        </div>
-                    ))
                     }                            
                 </Menu>
             </Sidebar>

@@ -69,7 +69,7 @@ function StartPage() {
             <h2>Information</h2>
             <ul className="information-list">
                 <li>1 Question</li>
-                <li>5 Minutes</li>
+                <li>10 Minutes</li>
                 <li>Happy Practicing!</li>
             </ul>
             <PacManButton onClick={handleStartClick} />
