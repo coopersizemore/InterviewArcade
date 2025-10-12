@@ -23,7 +23,7 @@ async def get_interview_feedback(request: FeedbackRequest):
     """
 
     audio_path = "data/recording.wav"
-    if not audio_path.exists():
+    if not audio_path:
         raise HTTPException(
             status_code=400, detail=f"audio_filepath not found: {audio_path}"
         )
