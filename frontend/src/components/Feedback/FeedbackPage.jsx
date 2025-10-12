@@ -69,7 +69,7 @@ function FeedbackPage() {
             </div>
             <div className="right-pane">
                 <div className="recording">
-                    <h3>AI Voiceover</h3>
+                    <h3>AImy's Feedback</h3>
                     <AudioPlayer audioData={audioData} isLoading={isAudioLoading} />
                 </div>
                 <div className="transcript">
