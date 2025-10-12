@@ -1,12 +1,8 @@
-html {
-  min-height: 100%;
-  display: grid; /* This helps center the card in the viewport */
-}
-
-body {
-  display: grid; /* This helps center the card in the viewport */
+body {  
+  display: grid;
   background:
-    url(https://images.unsplash.com/photo-1729824346255-52a8f898fe84?w=1400)
-    50%/ cover #212121;
-  background-blend-mode: multiply;
+    url(../assets/neon-grid-background.png)
+    50%/cover,
+    rgba(255, 252, 252, 0.7); /* More transparent overlay */
+  background-blend-mode:normal;
 }

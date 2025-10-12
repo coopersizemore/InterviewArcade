@@ -9,8 +9,8 @@
   /* Hide the outer part of the blurred pseudo-element */
   overflow: hidden;
   position: relative;
-  width: min(12.5em, 25vmin);
-  aspect-ratio: 1;
+  width: min(10.0em, 20vmin);
+  aspect-ratio: 5;
   border-radius: 0.5em;
 
   /* Text & layout styles for presentation */
@@ -22,6 +22,7 @@
   text-align: center;
   text-transform: uppercase;
   text-wrap: balance;
+  margin-top: 1em; /* Add space above the card */
 }
 
 .card::before {
