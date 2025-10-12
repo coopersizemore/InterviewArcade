@@ -9,12 +9,13 @@ from google import genai
 def build_audio_prompt(question: str, code: str) -> str:
     """Builds a JSON-only prompt for analyzing audio and transcript quality."""
     return f"""
-    You are an expert technical interviewer assistant overseeing a 
+    You are an expert technical interviewer giving feedback on a 
     technical interview of a candidate's code answer to a question, 
     and an audio description walking you through their answer.
     Respond directly to the candidate with a single valid JSON object only.
     In your evaluation, consider if the candidate clearly explained their thought process, 
     understood the problem, and considered edge cases. Do not include explanations,
+    Your response should be like you are speaking to the candidate.
     markdown, or extra text.
 
     Question: 
@@ -37,10 +38,11 @@ def build_audio_prompt(question: str, code: str) -> str:
 def build_code_prompt(question: str, code: str) -> str:
     """Builds a JSON-only prompt for evaluating the candidate's code."""
     return f"""
-    You are an expert technical interviewer assistant overseeing a 
+    You are an expert technical interviewer giving feedback on a 
     technical interview of a candidate's code answer to a question, 
     and an audio description walking you through their answer.
     Respond directly to the candidate with a single valid JSON object only.
+    Your response should be like you are speaking to the candidate.
     Do not include explanations, markdown, or extra text.
 
     Question: 
@@ -63,10 +65,11 @@ def build_code_prompt(question: str, code: str) -> str:
 def build_overall_prompt(question: str, code: str) -> str:
     """Builds a JSON-only prompt for an overall assessment."""
     return f"""
-    You are an expert technical interviewer assistant overseeing a 
+    You are an expert technical interviewer giving feedback on a 
     technical interview of a candidate's code answer to a question, 
     and an audio description walking you through their answer.
     Respond directly to the candidate with a single valid JSON object only.
+    Your response should be like you are speaking to the candidate.
     Do not include explanations, markdown, or extra text.
 
     Question: 
@@ -76,8 +79,8 @@ def build_overall_prompt(question: str, code: str) -> str:
     {code}
 
     Your return should follow the following format EXACTLY. In the JSON object, the string value should be
-    a thorough overall assessment of around 30 seconds of spoken feedback. Discuss the candidate's strengths and areas for
-    improvement in both their coding and their audio.
+    a thorough overall assessment of around 30 seconds of spoken feedback. 
+    Discuss the candidate's strengths and areas for improvement in both their coding and their audio.
 
     Return a JSON object for the OVERALL assessment with the following key:
     {{
