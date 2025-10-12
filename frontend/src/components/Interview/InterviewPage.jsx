@@ -64,7 +64,7 @@ function blobToBase64(blob) {
 
         // while waiting for reponse, navigate to loading screen
         try {
-            const response = await fetch (`${BASE_URL}/api/feedback`, {
+            const response = await fetch(`${BASE_URL}/api/feedback`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -77,6 +77,8 @@ function blobToBase64(blob) {
                 )
             }
             )
+        } catch (error) {
+            console.log(error);
         }
         // when done, pass in the response into feedback page
 
