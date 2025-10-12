@@ -14,15 +14,17 @@ def build_audio_prompt(question: str, code: str) -> str:
     and an audio description walking you through their answer.
     Respond directly to the candidate with a single valid JSON object only.
     In your evaluation, consider if the candidate clearly explained their thought process, 
-    understood the problem, and considered edge cases. Do not include explanations,
-    Your response should be like you are speaking to the candidate.
-    markdown, or extra text.
+    understood the problem, and considered all edge cases. 
+    Do not include explanations, markdown, or extra text.
 
     Question: 
     {question}
 
     Candidate code answer:
     {code}
+
+    You should follow the following format EXACTLY, 
+    and respond as if you were speaking directly to the interviewee.
 
     Return a JSON object for the AUDIO review with the following keys:
     {{
@@ -42,6 +44,7 @@ def build_code_prompt(question: str, code: str) -> str:
     technical interview of a candidate's code answer to a question, 
     and an audio description walking you through their answer.
     Respond directly to the candidate with a single valid JSON object only.
+    In your evaulation, consider the code's accuracy, time complexity, and readibility.
     Your response should be like you are speaking to the candidate.
     Do not include explanations, markdown, or extra text.
 
@@ -50,6 +53,9 @@ def build_code_prompt(question: str, code: str) -> str:
 
     Candidate code answer:
     {code} 
+
+    You should follow the following format EXACTLY, 
+    and respond as if you were speaking directly to the interviewee.
 
     Return a JSON object for the CODE review with the following keys:
     {{
