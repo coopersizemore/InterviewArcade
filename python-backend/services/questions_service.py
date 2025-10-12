@@ -9,6 +9,3 @@ def load_questions_from_file():
             return json.load(f)
     except FileNotFoundError:
         return []
-    
-
-print(load_questions_from_file(), "Loaded questions")
