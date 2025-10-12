@@ -8,6 +8,16 @@ import useAudioRecorder from "../../hooks/useAudioRecorder";
 import './InterviewPage.css'
 
 
+// ChatGPT 
+function blobToBase64(blob) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = () => resolve(reader.result);
+        reader.onerror = reject;
+    });
+}
+
 const InterviewPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
@@ -17,16 +27,6 @@ const InterviewPage = () => {
     const[error, setError] = useState('')
     const[data, setData] = useState('')
     const[isLoading, setIsLoading] = useState(false)
-
-    // ChatGPT 
-    function blobToBase64(blob) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => resolve(reader.result);
-        reader.onerror = reject;
-    });
-    }
 
     const onChunk = useCallback(async (blob) => {
         console.log("CHUNKIN")
@@ -55,7 +55,7 @@ const InterviewPage = () => {
         console.log("New audio chunk:", blob);
       }, []);
 
-    const { startAudio, stopAudio, isRecording } = useAudioRecorder(onChunk);
+    const { startAudio, stopAudio } = useAudioRecorder(onChunk);
 
     const endInterview = async () => {
         // stop recording
@@ -97,37 +97,30 @@ const InterviewPage = () => {
 
 
     useEffect(() => {
-        // 1. We create an async function to handle the setup
-        const initializeRecording = async () => {
-            try {
-                // This now waits for the user to grant permission
-                // and for the recording to actually begin.
-                await startAudio();
-                
-                // 2. Show the alert only AFTER recording has successfully started.
-                setRecordingAlert(true);
-            } catch (error) {
-                console.error("Could not start recording:", error);
-                // Optionally set an error state here
-            }
-        };
+    const initializeRecording = async () => {
+        try {
+            await startAudio();
+            setRecordingAlert(true);
+        } catch (error) {
+            // Handle the case where the user denies microphone permission
+            setError("Microphone access was denied. Please refresh and grant permission.");
+        }
+    };
 
-        initializeRecording();
+    initializeRecording();
 
-        // 3. Return a cleanup function.
-        // This function runs automatically when the component unmounts.
-        return () => {
-            console.log("Component unmounting, stopping audio.");
-            stopAudio();
-        };
-    }, [startAudio, stopAudio]); // 4. Add the hook's functions to the dependency array
+    // The cleanup function is crucial for stopping the mic when the user navigates away
+    return () => {
+        stopAudio();
+    };
+}, [startAudio, stopAudio]); // The dependency array is now correct and stable
 
     return (
        
         <div style={{display: "flex", height: '100vh'}}>
             {/* The below alert does not work yet */}
 
-        {recordingAlert && <Alert variant='info' dismissible onClose={setRecordingAlert(false)}> Audio recording has started! </Alert>}        
+        {recordingAlert && <Alert variant='info' dismissible onClose={() => setRecordingAlert(false)}> Audio recording has started! </Alert>}        
         {error && <Alert variant='danger'> Something went wrong! Please refresh! </Alert>}
         <Sidebar style={{ display: "inline-block", width: '35vw', height: '100vh' }}>
             <Menu>

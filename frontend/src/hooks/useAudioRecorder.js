@@ -1,29 +1,43 @@
-import {useEffect, useRef} from "react";
+import { useState, useRef, useCallback } from "react";
 
 export default function useAudioRecorder(onChunk) {
-    const recorderRef = useRef(null);
+    const [isRecording, setIsRecording] = useState(false);
+    const mediaRecorderRef = useRef(null);
+    const streamRef = useRef(null);
 
-    useEffect(() => {
-        console.log("Setting up audio recorder")
-        async function setup() {
-            const stream = await navigator.mediaDevices.getUserMedia({audio: true});
-            const recorder = new MediaRecorder(stream);
-            recorderRef.current = recorder;
-            recorder.ondataavailable = (event) => onChunk(event.data);
+    const startAudio = useCallback(async () => {
+        if (isRecording) {
+            console.warn("Recording is already in progress.");
+            return;
         }
-        setup();
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            streamRef.current = stream;
+            const recorder = new MediaRecorder(stream);
+            mediaRecorderRef.current = recorder;
+            recorder.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    onChunk(event.data);
+                }
+            };
+            recorder.start(10000);
+            setIsRecording(true);
+            console.log("Audio recording successfully started.");
+        } catch (err) {
+            console.error("Failed to start audio recording:", err);
+            throw err;
+        }
+    }, [onChunk]); // <-- REMOVED isRecording from this array
+
+    const stopAudio = useCallback(() => {
+        if (!mediaRecorderRef.current) {
+            return;
+        }
+        mediaRecorderRef.current.stop();
+        streamRef.current?.getTracks().forEach(track => track.stop());
+        setIsRecording(false);
+        console.log("Audio recording stopped.");
     }, []);
 
-    function startAudio() {
-        console.log("Starting")
-        // 1000 milliseconds is 1 second
-        // 60,000 represents 1 minute
-        recorderRef.current?.start(20000);
-    }
-
-    function stopAudio() {
-        recorderRef.current?.stop();
-    }
-
-    return {startAudio, stopAudio};
+    return { startAudio, stopAudio, isRecording };
 }
