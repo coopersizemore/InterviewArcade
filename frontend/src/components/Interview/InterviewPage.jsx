@@ -56,7 +56,7 @@ function blobToBase64(blob) {
     const {startAudio, stopAudio} = useAudioRecorder(onChunk);
 
     // const[problemInfo, setProblemInfo] = useState('')
-    const endInterview = () => {
+    const endInterview = async () => {
         // stop recording
         stopAudio()
         // do POST request with code solution
