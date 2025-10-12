@@ -1,153 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+/* --- Retro Theme General Setup --- */
+:root {
+  --neon-cyan: #00ffff;
+  --neon-magenta: #ff00ff;
+  --neon-green: #39ff14;
+  --dark-bg: #0a0a0a;
+  --text-color: #f0f0f0;
+  --header-font: 'Press Start 2P', cursive;
+  --body-font: 'VT323', monospace;
+}
+
+/* --- Main Layout & Background --- */
 .split-container {
   display: grid;
   grid-template-columns: 65fr 35fr;
   width: 100vw;
   height: 100vh;
-  font-family: sans-serif; /* Added a default font */
+  background-color: var(--dark-bg);
+  color: var(--text-color);
+  font-family: var(--body-font);
+  font-size: 1.2rem; /* Larger font for retro feel */
+  position: relative;
+  overflow: hidden; /* Hide scanline overflow */
 }
 
-.left-pane {
+/* Add a CRT scanline effect over the whole page */
+.split-container::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 1;
+  pointer-events: none; /* Allows clicking through the overlay */
+}
+
+.left-pane, .right-pane {
   padding: 30px;
-  background-color: #ffffff;
   display: flex;
-  gap: 30px; /* Adds space between the two feedback columns */
-  overflow-y: auto; /* Allows scrolling if content is too long */
+  gap: 30px;
+  overflow-y: auto;
+  z-index: 2; /* Place content above the scanline overlay */
 }
 
 .right-pane {
-  display: flex;
+  border-left: 3px solid var(--neon-cyan);
   flex-direction: column;
-  padding: 30px;
-  background-color: #f0f0f0;
-  border-left: 1px solid #cccccc;
+}
+
+/* --- Feedback Column Styling --- */
+.feedback-column, .recording, .transcript {
+  flex: 1;
+  background-color: rgba(10, 10, 10, 0.5); /* Slightly transparent */
+  border: 2px solid var(--neon-magenta);
+  box-shadow: 0 0 15px var(--neon-magenta), inset 0 0 10px rgba(255, 0, 255, 0.5);
+  padding: 20px;
   overflow-y: auto;
 }
 
-/* --- Styles for the new FeedbackColumn component --- */
-.feedback-column {
-  flex: 1; /* Makes each column take up half the space in the left pane */
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-}
-
-.feedback-column h2 {
+.feedback-column h2, .recording h3, .transcript h3 {
+  font-family: var(--header-font);
+  font-size: 1.5rem;
+  color: var(--neon-green);
+  text-shadow: 0 0 5px var(--neon-green);
   margin-top: 0;
-  color: #333;
-  border-bottom: 2px solid #007bff;
   padding-bottom: 10px;
+  border-bottom: 2px solid var(--neon-green);
 }
 
 .score-badge {
-  display: inline-block;
-  background-color: #007bff;
-  color: white;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-weight: bold;
+  background-color: var(--neon-green);
+  color: var(--dark-bg);
+  padding: 10px 15px;
+  font-family: var(--header-font);
+  font-size: 0.8rem;
+  text-align: center;
   margin-bottom: 20px;
+  display: inline-block;
+  border: 2px solid var(--dark-bg);
+  box-shadow: 4px 4px 0px #000; /* Sharp, blocky shadow */
 }
 
 .feedback-section h3 {
-  color: #555;
-  margin-top: 20px;
+  font-family: var(--header-font);
+  font-size: 1rem;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px var(--neon-cyan);
 }
 
 .feedback-section ul {
   padding-left: 20px;
-  list-style-type: '✅ '; /* Fun checkmark for lists */
+  list-style-type: '> '; /* Classic terminal prompt */
 }
 
 .feedback-section ul li {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   line-height: 1.5;
 }
 
-.feedback-section p {
-  background-color: #ffffff;
-  border-left: 4px solid #ddd;
+.feedback-section p, .transcript p {
+  background-color: #111;
+  border: 1px solid #333;
   padding: 15px;
   margin-top: 10px;
-  border-radius: 4px;
   line-height: 1.6;
 }
 
-/** Styles for audio components */
-.recording, .transcript {
-  background: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  border: 1px solid #e0e0e0;
-}
-
-.transcript p {
-  line-height: 1.7;
-  white-space: pre-wrap; /* Respects newlines in the transcript text */
-  color: #333;
-}
-
-/* --- Styles for the new AudioPlayer component --- */
+/* --- Retro Audio Player --- */
 .audio-player {
   display: flex;
   align-items: center;
   gap: 15px;
-  background-color: #f9f9f9;
-  padding: 10px 15px;
-  border-radius: 50px; /* Pill shape */
-  border: 1px solid #ddd;
+  background-color: #111;
+  padding: 10px;
+  border: 2px solid var(--neon-cyan);
 }
 
 .audio-player.loading {
   justify-content: center;
-  color: #555;
-  font-weight: bold;
+  color: var(--neon-green);
+  font-family: var(--header-font);
+  font-size: 0.8rem;
 }
 
 .play-pause-btn {
-  background: #007bff;
+  background: var(--neon-cyan);
   border: none;
-  border-radius: 50%;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--dark-bg);
   cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.play-pause-btn:hover {
-  background: #0056b3;
+  box-shadow: 2px 2px 0px #000;
 }
 
 .time-display {
-  font-family: monospace;
-  font-size: 0.9em;
-  color: #333;
-  min-width: 40px;
+  font-family: var(--body-font);
+  font-size: 1.2rem;
+  color: var(--neon-green);
+  min-width: 50px;
 }
 
 .progress-bar {
   flex-grow: 1;
   -webkit-appearance: none;
   appearance: none;
-  height: 8px;
-  background: #ddd;
-  border-radius: 5px;
+  height: 10px;
+  background: #333;
   outline: none;
+  border: 1px solid #555;
   cursor: pointer;
 }
 
 .progress-bar::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
-  background: #007bff;
-  border-radius: 50%;
+  width: 12px;
+  height: 20px; /* Rectangular thumb */
+  background: var(--neon-green);
   cursor: pointer;
+  border: 1px solid var(--dark-bg);
 }
 
 /* --- Loading Spinner Animation --- */
@@ -158,5 +181,20 @@
 
 .spinner {
   animation: spin 1s linear infinite;
-  color: #007bff;
+  color: var(--neon-green);
+}
+
+/* --- Retro Scrollbar for Webkit Browsers (Chrome, Safari) --- */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+  border-left: 1px solid var(--neon-magenta);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--neon-magenta);
+  box-shadow: 0 0 5px var(--neon-magenta);
 }
