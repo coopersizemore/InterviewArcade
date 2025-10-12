@@ -20,7 +20,7 @@ export default function useAudioRecorder(onChunk) {
                     onChunk(event.data);
                 }
             };
-            recorder.start(10000);
+            recorder.start();
             setIsRecording(true);
             console.log("Audio recording successfully started.");
         } catch (err) {

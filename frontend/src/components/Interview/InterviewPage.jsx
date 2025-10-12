@@ -8,13 +8,17 @@ import useAudioRecorder from "../../hooks/useAudioRecorder";
 import './InterviewPage.css'
 
 
-// ChatGPT 
 function blobToBase64(blob) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(blob);
-        reader.onloadend = () => resolve(reader.result);
-        reader.onerror = reject;
+        reader.onloadend = () => {
+            // reader.result is a string like "data:audio/mpeg;base64,UklGRi..."
+            // We split the string at the comma and take the second part.
+            const base64String = reader.result.split(',')[1];
+            resolve(base64String);
+        };
+        reader.onerror = (error) => reject(error);
     });
 }
 
@@ -32,13 +36,12 @@ const InterviewPage = () => {
         console.log("CHUNKIN")
         
         const payload = {
-            filename: 'audio_file',
-
             // ENCODE from binary to base64
             data: await blobToBase64(blob),
+            data_type: "audio/wav"
         }
         try{
-            const response = await fetch(`${BASE_URL}/api/audio`,{
+            const response = await fetch(`http://localhost:8000/api/audio`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -70,7 +73,7 @@ const InterviewPage = () => {
             setIsLoading(true)
 
             // This needs to happen in loading screen
-            const response = await fetch (`${BASE_URL}/api/feedback`, {
+            const response = await fetch (`http://localhost:8000/api/feedback`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
