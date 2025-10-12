@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import FeedbackColumn from './FeedbackColumn';
 import AudioPlayer from './AudioPlayer';
+import { jsPDF } from "jspdf";
 
 function FeedbackPage() {
     const location = useLocation();
@@ -60,6 +61,43 @@ function FeedbackPage() {
         return <div>No feedback data available. Please complete an interview first.</div>;
     }
 
+    // 🧾 PDF Download Handler
+    const handleDownloadPDF = () => {
+        const doc = new jsPDF({ unit: "pt", format: "a4" });
+        const lineHeight = 20;
+        let y = 40;
+
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18);
+        doc.text("Interview Feedback Summary", 40, y);
+        y += 40;
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+
+        // --- Code Review ---
+        doc.text("Code Review:", 40, y);
+        y += 20;
+        const codeReviewLines = doc.splitTextToSize(feedbackData.code_review || "No code review available.", 520);
+        doc.text(codeReviewLines, 40, y);
+        y += codeReviewLines.length * lineHeight + 10;
+
+        // --- Audio Review ---
+        doc.text("Audio Review:", 40, y);
+        y += 20;
+        const audioReviewLines = doc.splitTextToSize(feedbackData.audio_review || "No audio review available.", 520);
+        doc.text(audioReviewLines, 40, y);
+        y += audioReviewLines.length * lineHeight + 10;
+
+        // --- Overall Assessment ---
+        doc.text("Overall Assessment:", 40, y);
+        y += 20;
+        const assessmentLines = doc.splitTextToSize(feedbackData.overall_assessment || "No overall assessment available.", 520);
+        doc.text(assessmentLines, 40, y);
+
+        doc.save("mockly-feedback.pdf");
+    };
+
     return (
         <div className="split-container">
             <div className="left-pane">
@@ -76,6 +114,20 @@ function FeedbackPage() {
                     <h3>Transcript</h3>
                     <p>{feedbackData.overall_assessment}</p>
                 </div>
+                <button
+                    style={{
+                        marginTop: "20px",
+                        padding: "10px 20px",
+                        borderRadius: "8px",
+                        border: "none",
+                        backgroundColor: "#007bff",
+                        color: "white",
+                        cursor: "pointer"
+                    }}
+                    onClick={handleDownloadPDF}
+                >
+                    📄 Download PDF
+                </button>
             </div>
         </div>
     );
