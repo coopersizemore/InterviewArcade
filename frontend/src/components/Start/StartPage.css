@@ -1,0 +1,9 @@
+.start-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.information-list {
+    color: white;
+}
