@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from models import FeedbackRequest, FeedbackResponse, Review, AudioResponse, TTSRequest, TTSResponse
+from models import FeedbackRequest, FeedbackResponse, Review, AudioBlob, TTSRequest, TTSResponse
 from pathlib import Path
 import asyncio
 
@@ -94,6 +94,6 @@ async def transcript_to_audio(request: TTSRequest):
     """
     try:
         audio_bytes = await textToSpeech(request.transcript)
-        return AudioResponse(content=audio_bytes, media_type="audio/wav")
+        return AudioBlob(content=audio_bytes, media_type="audio/wav")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
