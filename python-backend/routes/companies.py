@@ -19,4 +19,5 @@ async def get_companies():
             name=companies[i],
             description=""
         ))
-    return list(companies)
+
+    return rtn
