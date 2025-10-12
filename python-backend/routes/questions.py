@@ -14,6 +14,13 @@ async def get_questions():
         raise HTTPException(status_code=404, detail="No questions available")
     return QUESTIONS
 
+@router.get("/random", response_model=InterviewQuestion)
+async def get_random_question():
+    """Endpoint to fetch a random interview question."""
+    if not QUESTIONS:
+        raise HTTPException(status_code=404, detail="No questions available")
+    return random.choice(QUESTIONS)
+
 @router.get("/id/{question_id}", response_model=InterviewQuestion)
 async def get_question_by_id(question_id: int):
     """Endpoint to fetch a single question by its ID."""

@@ -1,18 +1,68 @@
-import { useNavigate } from "react-router-dom";
-import GlowingCard from './GlowingCard';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import PacManButton from './PacManButton';
 import './StartPage.css'
 
 function StartPage() {
     const navigate = useNavigate();
-    
-    // Takes the user to the interview page
-    function cardClick() {
-        navigate('/interview');
-    }
+    const location = useLocation();
 
-    // function cardClick() {
-    //     console.log("Hello World!")
-    // }
+    const [error, setError] = useState(null);
+
+    // The fetch logic is now inside the click handler
+    const handleStartClick = async () => {
+        setError(null); // Clear any previous errors
+
+        // Read the instructions (company name or random flag) from the previous page
+        const { company, random } = location.state || {};
+        let apiUrl = '';
+
+        // Build the correct API URL based on the instructions
+        if (company) {
+            apiUrl = `http://localhost:8000/api/questions/companyName/${company}`;
+        } else if (random) {
+            apiUrl = `http://localhost:8000/api/questions/random`;
+        } else {
+            // This is a fallback in case the page is reached without proper state
+            setError('No interview type specified. Please go back and select an option.');
+            return;
+        }
+
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error('Could not fetch interview question.');
+            }
+
+            const questionToPass = await response.json();
+            if (questionToPass) {
+                console.log("Navigating to interview with question:", questionToPass);
+                // On success, navigate to the interview page with the question
+                // navigate('/interview', { state: { question: questionToPass } });
+                // After a 5-second delay, navigate to the interview page.
+                setTimeout(() => {
+                    navigate('/interview', { state: { question: questionToPass } });
+                }, 5000); // 5-second delay
+            } else {
+                throw new Error('No questions found for the selected criteria.');
+            }
+        } catch (err) {
+            // If anything fails, show the error message
+            setError(err.message);
+        }
+    };
+
+    // --- UI RENDERING ---
+    if (error) {
+        // Show a helpful error message and a way to go back
+        return (
+        <div>
+            <h2>Error</h2>
+            <p>{error}</p>
+            <button onClick={() => navigate(-1)}>Go Back</button>
+        </div>
+        );
+    }
 
     return (
         <div className="start-page-container">
@@ -22,7 +72,7 @@ function StartPage() {
                 <li>5 Minutes</li>
                 <li>Happy Practicing!</li>
             </ul>
-            <GlowingCard onClick={cardClick}/>
+            <PacManButton onClick={handleStartClick} />
         </div>
     )
 }

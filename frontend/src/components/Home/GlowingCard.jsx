@@ -5,7 +5,7 @@ function GlowingCard({onClick}) {
 
   return (
     <div className="card" onClick={onClick}>
-      Start Interview!
+      CONFIRM
     </div>
   );
 }
