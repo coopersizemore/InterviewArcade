@@ -9,41 +9,41 @@ function FeedbackPage() {
 
     // 1. Access the data from the location's state
     // Use optional chaining (?.) in case the page is loaded directly
-    // const feedbackData = location.state?.feedback;
-    const feedbackData = {
-        "code_review": {
-            "score": "8/10",
-            "strengths_list": [
-            "Good variable naming",
-            "Effective use of modern JavaScript (async/await)",
-            "Clean code structure"
-            ],
-            "strengths_description": "The code is well-organized and easy to follow. Variable names are descriptive, which greatly improves readability. The use of async/await for handling asynchronous operations is a great example of modern, clean JavaScript.",
-            "improvements_list": [
-            "Error handling could be more robust",
-            "Lack of comments for complex logic",
-            "Opportunity to componentize UI elements"
-            ],
-            "improvements_description": "While the code works for the happy path, adding more comprehensive error handling with try-catch blocks would make it more resilient. Some of the more complex functions could benefit from comments explaining the 'why' behind the logic. Consider breaking down larger UI sections into smaller, reusable components."
-        },
-        "audio_review": {
-            "score": "7/10",
-            "strengths_list": [
-            "Clear and steady speaking pace",
-            "Confident tone",
-            "Good articulation"
-            ],
-            "strengths_description": "Your speaking voice is clear and easy to understand. You maintain a consistent pace and a confident tone, which helps in conveying your points effectively. Your articulation is excellent.",
-            "improvements_list": [
-            "Frequent use of filler words ('um', 'like')",
-            "Could elaborate more on the thought process",
-            "Slightly monotonous pitch"
-            ],
-            "improvements_description": "Try to be mindful of filler words like 'um' and 'like', as they can sometimes be distracting. When solving the problem, it would be beneficial to explain your thought process in more detail. Varying your vocal pitch could also make your explanation more engaging for the listener."
-        },
-        "transcript": "Test"
-        //"transcript": "Okay, so for this problem, I think the first step is to, um, get the data from the API"
-    }
+    const feedbackData = location.state?.data;
+    // const feedbackData = {
+    //     "code_review": {
+    //         "score": "8/10",
+    //         "strengths_list": [
+    //         "Good variable naming",
+    //         "Effective use of modern JavaScript (async/await)",
+    //         "Clean code structure"
+    //         ],
+    //         "strengths_description": "The code is well-organized and easy to follow. Variable names are descriptive, which greatly improves readability. The use of async/await for handling asynchronous operations is a great example of modern, clean JavaScript.",
+    //         "improvements_list": [
+    //         "Error handling could be more robust",
+    //         "Lack of comments for complex logic",
+    //         "Opportunity to componentize UI elements"
+    //         ],
+    //         "improvements_description": "While the code works for the happy path, adding more comprehensive error handling with try-catch blocks would make it more resilient. Some of the more complex functions could benefit from comments explaining the 'why' behind the logic. Consider breaking down larger UI sections into smaller, reusable components."
+    //     },
+    //     "audio_review": {
+    //         "score": "7/10",
+    //         "strengths_list": [
+    //         "Clear and steady speaking pace",
+    //         "Confident tone",
+    //         "Good articulation"
+    //         ],
+    //         "strengths_description": "Your speaking voice is clear and easy to understand. You maintain a consistent pace and a confident tone, which helps in conveying your points effectively. Your articulation is excellent.",
+    //         "improvements_list": [
+    //         "Frequent use of filler words ('um', 'like')",
+    //         "Could elaborate more on the thought process",
+    //         "Slightly monotonous pitch"
+    //         ],
+    //         "improvements_description": "Try to be mindful of filler words like 'um' and 'like', as they can sometimes be distracting. When solving the problem, it would be beneficial to explain your thought process in more detail. Varying your vocal pitch could also make your explanation more engaging for the listener."
+    //     },
+    //     "transcript": "Test"
+    //     //"transcript": "Okay, so for this problem, I think the first step is to, um, get the data from the API"
+    // }
 
     // function cardClick() {
     //     console.log("Hello World!")
