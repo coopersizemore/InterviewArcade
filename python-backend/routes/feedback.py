@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from models import FeedbackRequest, FeedbackResponse, Review, AudioResponse
 from pathlib import Path
+import asyncio
 
 from services import gemini_service
 from services.elevenlabs_service import textToSpeech
@@ -13,7 +14,7 @@ async def get_interview_feedback(request: FeedbackRequest):
     """
     Return separate reviews for code and audio plus an overall assessment.
 
-    The endpoint performs three focused LLM calls (or fewer depending on fallbacks):
+    The endpoint performs three focused LLM calls concurrently:
     - code review (focus='code')
     - audio review (focus='audio')
     - overall assessment (focus='overall')
@@ -21,22 +22,43 @@ async def get_interview_feedback(request: FeedbackRequest):
 
     audio_path = Path(request.audio_filepath)
     if not audio_path.exists():
-        raise HTTPException(status_code=400, detail=f"audio_filepath not found: {request.audio_filepath}")
+        raise HTTPException(
+            status_code=400, detail=f"audio_filepath not found: {request.audio_filepath}"
+        )
 
-    # Request a code-focused review
-    code_result = await gemini_service.analyze_interview(
-        audio_filepath=str(audio_path), question=request.question, code=request.code, focus="code"
+    # Kick off all three Gemini requests concurrently
+    code_task = asyncio.create_task(
+        gemini_service.analyze_interview(
+            audio_filepath=str(audio_path),
+            question=request.question,
+            code=request.code,
+            focus="code",
+        )
+    )
+    audio_task = asyncio.create_task(
+        gemini_service.analyze_interview(
+            audio_filepath=str(audio_path),
+            question=request.question,
+            code=request.code,
+            focus="audio",
+        )
+    )
+    overall_task = asyncio.create_task(
+        gemini_service.analyze_interview(
+            audio_filepath=str(audio_path),
+            question=request.question,
+            code=request.code,
+            focus="overall",
+        )
     )
 
-    # Request an audio-focused review
-    audio_result = await gemini_service.analyze_interview(
-        audio_filepath=str(audio_path), question=request.question, code=request.code, focus="audio"
-    )
-
-    # Request an overall assessment (could be optional)
-    overall_result = await gemini_service.analyze_interview(
-        audio_filepath=str(audio_path), question=request.question, code=request.code, focus="overall"
-    )
+    # Wait for all tasks to complete concurrently
+    try:
+        code_result, audio_result, overall_result = await asyncio.gather(
+            code_task, audio_task, overall_task
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Gemini API call failed: {str(e)}")
 
     # Map results into Review models with safe defaults
     code_review = Review(
@@ -60,8 +82,9 @@ async def get_interview_feedback(request: FeedbackRequest):
     return FeedbackResponse(
         code_review=code_review,
         audio_review=audio_review,
-        overall_assessment=overall_assessment
+        overall_assessment=overall_assessment,
     )
+
 
 @router.post("/tts")
 async def transcript_to_audio(transcript: str):
