@@ -71,7 +71,6 @@ const InterviewPage = () => {
     const endInterview = async () => {
         // stop recording
         stopAudio()
-        setTimeout(() => {}, 5000);
         // do POST request with code solution
         console.log(codeValue)
 

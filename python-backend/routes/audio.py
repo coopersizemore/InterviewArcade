@@ -11,7 +11,7 @@ DATA_DIR.mkdir(exist_ok=True)
 AUDIO_PATH = DATA_DIR / "recording.webm"
 
 @router.post("/")
-def send_audio(request: AudioBlob):
+async def send_audio(request: AudioBlob):
     """
     Receives an audio chunk (base64-encoded) from the frontend,
     decodes it, and appends it to a stored .wav file.
