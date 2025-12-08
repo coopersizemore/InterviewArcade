@@ -16,12 +16,12 @@
     "@monaco-editor/react": "^4.7.0",
     "bootstrap": "^5.3.8",
     "gsap": "^3.13.0",
+    "jspdf": "^3.0.4",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.0",
     "react-pro-sidebar": "^1.1.0",
-    "react-router-dom": "^7.9.4",
-    "jspdf": "^2.5.1"
+    "react-router-dom": "^7.9.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.37.0",
